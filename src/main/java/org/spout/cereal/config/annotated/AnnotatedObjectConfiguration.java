@@ -30,6 +30,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -107,7 +108,7 @@ public class AnnotatedObjectConfiguration extends AnnotatedConfiguration {
 	}
 
 	/**
-	 * Adds an object to be saved or loaded by the configuration.
+	 * Adds an object or a class to be saved or loaded by the configuration.
 	 * <p>
 	 * The node path of the object in the configuration is specified as an array
 	 * (varargs) of strings. Only annotated fields and methods will be used.
@@ -118,17 +119,24 @@ public class AnnotatedObjectConfiguration extends AnnotatedConfiguration {
 	 * A field named "exa" annotated with {@code @Setting({"cd.ef"})} in an object with
 	 * path "ab" will have its value saved at "ab.cd.ef". If no path is
 	 * specified in Setting, the path will be "ab.exa".
+	 * <p>
+	 * If the target is a class, only static fields and methods will be registered.
 	 *
-	 * @param object The object to load or save
-	 * @param path The path at which the object should be or is located in the
+	 * @param object The object or class to load or save
+	 * @param path The path at which the object or class should be or is located in the
 	 * configuration
 	 */
 	@SuppressWarnings("unchecked")
-	public void addObject(Object object, String... path) {
+	public void add(Object object, String... path) {
 		if (!objectMembers.containsKey(object)) {
 			final Set<Member> members = new HashSet<Member>();
-			members.addAll(ReflectionUtils.getDeclaredFieldsRecur(object.getClass(), Setting.class));
-			members.addAll(ReflectionUtils.getDeclaredMethodsRecur(object.getClass(), Load.class, Save.class));
+			if (object instanceof Class<?>) {
+				members.addAll(ReflectionUtils.getDeclaredFieldsRecur((Class<?>) object, Modifier.STATIC, Setting.class));
+				members.addAll(ReflectionUtils.getDeclaredMethodsRecur((Class<?>) object, Modifier.STATIC, Load.class, Save.class));
+			} else {
+				members.addAll(ReflectionUtils.getDeclaredFieldsRecur(object.getClass(), Setting.class));
+				members.addAll(ReflectionUtils.getDeclaredMethodsRecur(object.getClass(), Load.class, Save.class));
+			}
 			objectMembers.put(object, members);
 		}
 		if (!objectPaths.containsKey(object)) {
@@ -137,12 +145,12 @@ public class AnnotatedObjectConfiguration extends AnnotatedConfiguration {
 	}
 
 	/**
-	 * Removes an object from the configuration. It will not be used during the
+	 * Removes an object or a class from the configuration. It will not be used during the
 	 * next save or load invocations.
 	 *
-	 * @param object
+	 * @param object the object or the class to remove
 	 */
-	public void removeObject(Object object) {
+	public void remove(Object object) {
 		objectMembers.remove(object);
 		objectPaths.remove(object);
 	}
@@ -151,67 +159,73 @@ public class AnnotatedObjectConfiguration extends AnnotatedConfiguration {
 	public void load(ConfigurationNodeSource source) throws ConfigurationException {
 		for (Entry<Object, Set<Member>> entry : objectMembers.entrySet()) {
 			final Object object = entry.getKey();
-			final String[] objectPath = objectPaths.get(object);
-			final Set<Method> methods = new HashSet<Method>();
-			for (Member member : entry.getValue()) {
-				if (member instanceof Method) {
-					final Method method = (Method) member;
-					if (method.isAnnotationPresent(Load.class)) {
-						methods.add(method);
-					}
-					continue;
-				}
-				final Field field = (Field) member;
-				field.setAccessible(true);
-				String[] fieldPath = field.getAnnotation(Setting.class).value();
-				if (fieldPath.length == 0) {
-					fieldPath = new String[]{field.getName()};
-				}
-				final ConfigurationNode fieldNode = source.getNode(ArrayUtils.addAll(objectPath, fieldPath));
-				final Object value = fieldNode.getTypedValue(field.getGenericType());
-				try {
-					if (value != null) {
-						field.set(object, value);
-					} else {
-						fieldNode.setValue(field.getGenericType(), field.get(object));
-					}
-				} catch (IllegalAccessException ex) {
-					throw new ConfigurationException(ex);
-				}
-			}
-			invokeMethods(methods, object, source.getNode(objectPath));
+			load(source, object instanceof Class<?> ? null : object, objectPaths.get(object), entry.getValue());
 		}
+	}
+	
+	private void load(ConfigurationNodeSource source, Object object, String[] path, Set<Member> members) throws ConfigurationException {
+		final Set<Method> methods = new HashSet<Method>();
+		for (Member member : members) {
+			if (member instanceof Method) {
+				final Method method = (Method) member;
+				if (method.isAnnotationPresent(Load.class)) {
+					methods.add(method);
+				}
+				continue;
+			}
+			final Field field = (Field) member;
+			field.setAccessible(true);
+			String[] fieldPath = field.getAnnotation(Setting.class).value();
+			if (fieldPath.length == 0) {
+				fieldPath = new String[]{field.getName()};
+			}
+			final ConfigurationNode fieldNode = source.getNode(ArrayUtils.addAll(path, fieldPath));
+			final Object value = fieldNode.getTypedValue(field.getGenericType());
+			try {
+				if (value != null) {
+					field.set(object, value);
+				} else {
+					fieldNode.setValue(field.getGenericType(), field.get(object));
+				}
+			} catch (IllegalAccessException ex) {
+				throw new ConfigurationException(ex);
+			}
+		}
+		invokeMethods(methods, object, source.getNode(path));
 	}
 
 	@Override
 	public void save(ConfigurationNodeSource source) throws ConfigurationException {
 		for (Entry<Object, Set<Member>> entry : objectMembers.entrySet()) {
 			final Object object = entry.getKey();
-			final String[] objectPath = objectPaths.get(object);
-			final Set<Method> methods = new HashSet<Method>();
-			for (Member member : entry.getValue()) {
-				if (member instanceof Method) {
-					final Method method = (Method) member;
-					if (method.isAnnotationPresent(Save.class)) {
-						methods.add(method);
-					}
-					continue;
-				}
-				final Field field = (Field) member;
-				field.setAccessible(true);
-				String[] fieldPath = field.getAnnotation(Setting.class).value();
-				if (fieldPath.length == 0) {
-					fieldPath = new String[]{field.getName()};
-				}
-				final ConfigurationNode fieldNode = source.getNode(ArrayUtils.addAll(objectPath, fieldPath));
-				try {
-					fieldNode.setValue(field.getGenericType(), field.get(object));
-				} catch (IllegalAccessException ex) {
-					throw new ConfigurationException(ex);
-				}
-			}
-			invokeMethods(methods, object, source.getNode(objectPath));
+			save(source, object instanceof Class<?> ? null : object, objectPaths.get(object), entry.getValue());
 		}
+	}
+	
+	private void save(ConfigurationNodeSource source, Object object, String[] path, Set<Member> members) throws ConfigurationException {
+		final Set<Method> methods = new HashSet<Method>();
+		for (Member member : members) {
+			if (member instanceof Method) {
+				final Method method = (Method) member;
+				if (method.isAnnotationPresent(Save.class)) {
+					methods.add(method);
+				}
+				continue;
+			}
+			final Field field = (Field) member;
+			field.setAccessible(true);
+			String[] fieldPath = field.getAnnotation(Setting.class).value();
+			if (fieldPath.length == 0) {
+				fieldPath = new String[]{field.getName()};
+			}
+			final ConfigurationNode fieldNode = source.getNode(ArrayUtils.addAll(path, fieldPath));
+			try {
+				fieldNode.setValue(field.getGenericType(), field.get(object));
+			} catch (IllegalAccessException ex) {
+				throw new ConfigurationException(ex);
+			}
+		}
+		invokeMethods(methods, object, source.getNode(path));
 	}
 
 	private void invokeMethods(Set<Method> methods, Object target, ConfigurationNode nodeParam)
