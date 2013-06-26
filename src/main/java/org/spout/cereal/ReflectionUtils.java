@@ -35,6 +35,7 @@ import java.util.Enumeration;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
+import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +54,18 @@ public class ReflectionUtils {
 	public static List<Field> getFieldsRecur(Class<?> clazz) {
 		return getFieldsRecur(clazz, false);
 	}
+	
+	/**
+	 * Get all the public fields in a class with the specified modifiers, as well as those in its
+	 * superclasses (excluding {@link Object}).
+	 *
+	 * @param clazz The class to get all fields in
+	 * @param modifiers the modifier mask
+	 * @return The public fields in the class
+	 */
+	public static List<Field> getFieldsRecur(Class<?> clazz, int modifiers) {
+		return getFieldsRecur(clazz, modifiers, false);
+	}
 
 	/**
 	 * Get all the public fields in a class, as well as those in its
@@ -65,6 +78,19 @@ public class ReflectionUtils {
 	public static List<Field> getFieldsRecur(Class<?> clazz, boolean includeObject) {
 		return getFieldsRecur(clazz, includeObject, (Class<? extends Annotation>[]) null);
 	}
+	
+	/**
+	 * Get all the public fields in a class with the specified modifiers, as well as those in its
+	 * superclasses.
+	 *
+	 * @param clazz The class to get all fields in
+	 * @param modifiers the modifier mask
+	 * @param includeObject Whether to include fields in {@link Object}
+	 * @return The public fields in the class
+	 */
+	public static List<Field> getFieldsRecur(Class<?> clazz, int modifiers, boolean includeObject) {
+		return getFieldsRecur(clazz, modifiers, includeObject, (Class<? extends Annotation>[]) null);
+	}
 
 	/**
 	 * Get all the public fields in a class with the desired annotation, as well
@@ -76,14 +102,27 @@ public class ReflectionUtils {
 	 * @return The public fields in the class
 	 */
 	public static List<Field> getFieldsRecur(Class<?> clazz, Class<? extends Annotation>... annotations) {
-		return getFieldsRecur(clazz, false, annotations);
+		return getFieldsRecur(clazz, 0, false, annotations);
 	}
-
+	
 	/**
-	 * Get all the public fields in a class (optionally, with the desired
-	 * annotation), as well as those in its superclasses.
+	 * Get all the public fields in a class with the desired annotation and the specified modifiers, as well
+	 * as those in its superclasses (excluding {@link Object}).
 	 *
-	 * @see Class#getFields()
+	 * @param clazz The class to get all fields in
+	 * @param modifiers the modifier mask
+	 * @param annotations if not null, only include fields with any of these
+	 * annotations
+	 * @return The public fields in the class
+	 */
+	public static List<Field> getFieldsRecur(Class<?> clazz, int modifiers, Class<? extends Annotation>... annotations) {
+		return getFieldsRecur(clazz, modifiers, false, annotations);
+	}
+	
+	/**
+	 * Get all the public fields in a class with the desired annotation, as well
+	 * as those in its superclasses.
+	 *
 	 * @param clazz The class to get all fields in
 	 * @param includeObject Whether to include fields in {@link Object}
 	 * @param annotations if not null, only include fields with any of these
@@ -91,10 +130,26 @@ public class ReflectionUtils {
 	 * @return The public fields in the class
 	 */
 	public static List<Field> getFieldsRecur(Class<?> clazz, boolean includeObject, Class<? extends Annotation>... annotations) {
+		return getFieldsRecur(clazz, 0, includeObject, annotations);
+	}
+
+	/**
+	 * Get all the public fields in a class with the specified modifiers (optionally, with the desired
+	 * annotation), as well as those in its superclasses.
+	 *
+	 * @see Class#getFields()
+	 * @param clazz The class to get all fields in
+	 * @param modifiers the modifier mask
+	 * @param includeObject Whether to include fields in {@link Object}
+	 * @param annotations if not null, only include fields with any of these
+	 * annotations
+	 * @return The public fields in the class
+	 */
+	public static List<Field> getFieldsRecur(Class<?> clazz, int modifiers, boolean includeObject, Class<? extends Annotation>... annotations) {
 		final List<Field> fields = new ArrayList<Field>();
 		while (clazz != null && (includeObject || !Object.class.equals(clazz))) {
 			for (Field field : clazz.getFields()) {
-				if (annotations == null || hasAnyAnnotation(field, annotations)) {
+				if (hasModifiers(field, modifiers) && (annotations == null || hasAnyAnnotation(field, annotations))) {
 					fields.add(field);
 				}
 			}
@@ -113,7 +168,19 @@ public class ReflectionUtils {
 	public static List<Field> getDeclaredFieldsRecur(Class<?> clazz) {
 		return getDeclaredFieldsRecur(clazz, false);
 	}
-
+	
+	/**
+	 * Get all the fields in a class with the specified modifiers, as well as those in its superclasses
+	 * (excluding {@link Object}).
+	 *
+	 * @param clazz The class to get all fields in
+	 * @param modifiers the modifier mask
+	 * @return The public fields in the class
+	 */
+	public static List<Field> getDeclaredFieldsRecur(Class<?> clazz, int modifiers) {
+		return getDeclaredFieldsRecur(clazz, modifiers, false);
+	}
+	
 	/**
 	 * Get all the fields in a class, as well as those in its superclasses.
 	 *
@@ -122,9 +189,21 @@ public class ReflectionUtils {
 	 * @return The public fields in the class
 	 */
 	public static List<Field> getDeclaredFieldsRecur(Class<?> clazz, boolean includeObject) {
-		return getDeclaredFieldsRecur(clazz, includeObject, (Class<? extends Annotation>[]) null);
+		return getDeclaredFieldsRecur(clazz, 0, includeObject, (Class<? extends Annotation>[]) null);
 	}
 
+	/**
+	 * Get all the fields with the specified modifiers in a class, as well as those in its superclasses.
+	 *
+	 * @param clazz The class to get all fields in
+	 * @param modifiers the modifier mask
+	 * @param includeObject Whether to include fields in {@link Object}
+	 * @return The public fields in the class
+	 */
+	public static List<Field> getDeclaredFieldsRecur(Class<?> clazz, int modifiers, boolean includeObject) {
+		return getDeclaredFieldsRecur(clazz, modifiers, includeObject, (Class<? extends Annotation>[]) null);
+	}
+	
 	/**
 	 * Get all the fields in a class with the desired annotation, as well as
 	 * those in its superclasses (excluding {@link Object}).
@@ -135,25 +214,51 @@ public class ReflectionUtils {
 	 * @return The public fields in the class
 	 */
 	public static List<Field> getDeclaredFieldsRecur(Class<?> clazz, Class<? extends Annotation>... annotations) {
-		return getDeclaredFieldsRecur(clazz, false, annotations);
+		return getDeclaredFieldsRecur(clazz, 0, false, annotations);
 	}
 
 	/**
-	 * Get all the fields in a class (optionally, with the desired annotation),
+	 * Get all the fields in a class with the desired annotation and the specified modifiers, as well as
+	 * those in its superclasses (excluding {@link Object}).
+	 *
+	 * @param clazz The class to get all fields in
+	 * @param modifiers the modifier mask
+	 * @param annotations if not null, only include fields with any of these
+	 * annotations
+	 * @return The public fields in the class
+	 */
+	public static List<Field> getDeclaredFieldsRecur(Class<?> clazz, int modifiers, Class<? extends Annotation>... annotations) {
+		return getDeclaredFieldsRecur(clazz, modifiers, false, annotations);
+	}
+	
+	/**
+	 * Get all the fields in a class with the desired annotation, as well as those in its superclasses.
+	 *
+	 * @param clazz The class to get all fields in
+	 * @param includeObject Whether to include fields in {@link Object}
+	 * @return The public fields in the class
+	 */
+	public static List<Field> getDeclaredFieldsRecur(Class<?> clazz, boolean includeObject, Class<? extends Annotation>... annotations) {
+		return getDeclaredFieldsRecur(clazz, 0, includeObject, annotations);
+	}
+
+	/**
+	 * Get all the fields in a class  with the specified modifiers (optionally, with the desired annotation),
 	 * as well as those in its superclasses.
 	 *
 	 * @see Class#getDeclaredFields()
 	 * @param clazz The class to get all fields in
+	 * @param modifiers the modifier mask
 	 * @param includeObject Whether to include fields in {@link Object}
 	 * @param annotations if not null, only include fields with any of these
 	 * annotations
 	 * @return The public fields in the class
 	 */
-	public static List<Field> getDeclaredFieldsRecur(Class<?> clazz, boolean includeObject, Class<? extends Annotation>... annotations) {
+	public static List<Field> getDeclaredFieldsRecur(Class<?> clazz, int modifiers, boolean includeObject, Class<? extends Annotation>... annotations) {
 		final List<Field> fields = new ArrayList<Field>();
 		while (clazz != null && (includeObject || !Object.class.equals(clazz))) {
 			for (Field field : clazz.getDeclaredFields()) {
-				if (annotations == null || hasAnyAnnotation(field, annotations)) {
+				if (hasModifiers(field, modifiers) && (annotations == null || hasAnyAnnotation(field, annotations))) {
 					fields.add(field);
 				}
 			}
@@ -244,6 +349,18 @@ public class ReflectionUtils {
 	public static List<Method> getMethodsRecur(Class<?> clazz) {
 		return getMethodsRecur(clazz, false);
 	}
+	
+	/**
+	 * Get all the public methods in a class with the specified modifiers, as well as those in its
+	 * superclasses (excluding {@link Object}).
+	 *
+	 * @param clazz The class to get all methods in
+	 * @param modifiers the modifier mask
+	 * @return The public methods in the class
+	 */
+	public static List<Method> getMethodsRecur(Class<?> clazz, int modifiers) {
+		return getMethodsRecur(clazz, modifiers, false);
+	}
 
 	/**
 	 * Get all the public methods in a class, as well as those in its
@@ -255,6 +372,19 @@ public class ReflectionUtils {
 	 */
 	public static List<Method> getMethodsRecur(Class<?> clazz, boolean includeObject) {
 		return getMethodsRecur(clazz, includeObject, (Class<? extends Annotation>[]) null);
+	}
+	
+	/**
+	 * Get all the public methods in a class with the specified modifiers, as well as those in its
+	 * superclasses.
+	 *
+	 * @param clazz The class to get all methods in
+	 * @param modifiers the modifier mask
+	 * @param includeObject Whether to include methods in {@link Object}
+	 * @return The public methods in the class
+	 */
+	public static List<Method> getMethodsRecur(Class<?> clazz, int modifiers, boolean includeObject) {
+		return getMethodsRecur(clazz, modifiers, includeObject, (Class<? extends Annotation>[]) null);
 	}
 
 	/**
@@ -269,12 +399,25 @@ public class ReflectionUtils {
 	public static List<Method> getMethodsRecur(Class<?> clazz, Class<? extends Annotation>... annotations) {
 		return getMethodsRecur(clazz, false, annotations);
 	}
-
+	
 	/**
-	 * Get all the public methods in a class (optionally, with the desired
-	 * annotation), as well as those in its superclasses.
+	 * Get all the public methods in a class with the desired annotation and the specified modifiers, as
+	 * well as those in its superclasses (excluding {@link Object}).
 	 *
-	 * @see Class#getMethods()
+	 * @param clazz The class to get all methods in
+	 * @param modifiers the modifier mask
+	 * @param annotations if not null, only include methods with any of these
+	 * annotations
+	 * @return The public methods in the class
+	 */
+	public static List<Method> getMethodsRecur(Class<?> clazz, int modifiers, Class<? extends Annotation>... annotations) {
+		return getMethodsRecur(clazz, modifiers, false, annotations);
+	}
+	
+	/**
+	 * Get all the public methods in a class with the desired annotation, as
+	 * well as those in its superclasses (excluding {@link Object}).
+	 *
 	 * @param clazz The class to get all methods in
 	 * @param includeObject Whether to include methods in {@link Object}
 	 * @param annotations if not null, only include methods with any of these
@@ -282,10 +425,26 @@ public class ReflectionUtils {
 	 * @return The public methods in the class
 	 */
 	public static List<Method> getMethodsRecur(Class<?> clazz, boolean includeObject, Class<? extends Annotation>... annotations) {
+		return getMethodsRecur(clazz, 0, false, annotations);
+	}
+
+	/**
+	 * Get all the public methods in a class with the specified modifiers (optionally, with the desired
+	 * annotation), as well as those in its superclasses.
+	 *
+	 * @see Class#getMethods()
+	 * @param clazz The class to get all methods in
+	 * @param modifiers the modifier mask
+	 * @param includeObject Whether to include methods in {@link Object}
+	 * @param annotations if not null, only include methods with any of these
+	 * annotations
+	 * @return The public methods in the class
+	 */
+	public static List<Method> getMethodsRecur(Class<?> clazz, int modifiers, boolean includeObject, Class<? extends Annotation>... annotations) {
 		final List<Method> methods = new ArrayList<Method>();
 		while (clazz != null && (includeObject || !Object.class.equals(clazz))) {
 			for (Method method : clazz.getMethods()) {
-				if (annotations == null || hasAnyAnnotation(method, annotations)) {
+				if (hasModifiers(method, modifiers) && (annotations == null || hasAnyAnnotation(method, annotations))) {
 					methods.add(method);
 				}
 			}
@@ -306,6 +465,18 @@ public class ReflectionUtils {
 	}
 
 	/**
+	 * Get all the methods in a class with the specified modifiers, as well as those in its superclasses
+	 * (excluding {@link Object}).
+	 *
+	 * @param clazz The class to get all methods in
+	 * @param modifiers the modifier mask
+	 * @return The public methods in the class
+	 */
+	public static List<Method> getDeclaredMethodsRecur(Class<?> clazz, int modifiers) {
+		return getDeclaredMethodsRecur(clazz, modifiers, false);
+	}
+	
+	/**
 	 * Get all the methods in a class, as well as those in its superclasses.
 	 *
 	 * @param clazz The class to get all methods in
@@ -313,7 +484,19 @@ public class ReflectionUtils {
 	 * @return The public methods in the class
 	 */
 	public static List<Method> getDeclaredMethodsRecur(Class<?> clazz, boolean includeObject) {
-		return getDeclaredMethodsRecur(clazz, includeObject, (Class<? extends Annotation>[]) null);
+		return getDeclaredMethodsRecur(clazz, 0, includeObject, (Class<? extends Annotation>[]) null);
+	}
+	
+	/**
+	 * Get all the methods in a class with the specified modifiers, as well as those in its superclasses.
+	 *
+	 * @param clazz The class to get all methods in
+	 * @param modifiers the modifier mask
+	 * @param includeObject Whether to include methods in {@link Object}
+	 * @return The public methods in the class
+	 */
+	public static List<Method> getDeclaredMethodsRecur(Class<?> clazz, int modifiers, boolean includeObject) {
+		return getDeclaredMethodsRecur(clazz, modifiers, includeObject, (Class<? extends Annotation>[]) null);
 	}
 
 	/**
@@ -326,31 +509,68 @@ public class ReflectionUtils {
 	 * @return The public methods in the class
 	 */
 	public static List<Method> getDeclaredMethodsRecur(Class<?> clazz, Class<? extends Annotation>... annotations) {
-		return getDeclaredMethodsRecur(clazz, false, annotations);
+		return getDeclaredMethodsRecur(clazz, 0, false, annotations);
+	}
+	
+	/**
+	 * Get all the methods in a class with the desired annotation and the specified modifiers, as well as
+	 * those in its superclasses (excluding {@link Object}).
+	 *
+	 * @param clazz The class to get all methods in
+	 * @param modifiers the modifier mask
+	 * @param annotations if not null, only include methods with any of these
+	 * annotations
+	 * @return The public methods in the class
+	 */
+	public static List<Method> getDeclaredMethodsRecur(Class<?> clazz, int modifiers, Class<? extends Annotation>... annotations) {
+		return getDeclaredMethodsRecur(clazz, modifiers, false, annotations);
+	}
+	
+	/**
+	 * Get all the methods in a class with the desired annotation, as well as those in its superclasses.
+	 *
+	 * @param clazz The class to get all methods in
+	 * @param includeObject Whether to include methods in {@link Object}
+	 * @return The public methods in the class
+	 */
+	public static List<Method> getDeclaredMethodsRecur(Class<?> clazz, boolean includeObject, Class<? extends Annotation>... annotations) {
+		return getDeclaredMethodsRecur(clazz, 0, includeObject, annotations);
 	}
 
 	/**
-	 * Get all the methods in a class (optionally, with the desired annotation),
+	 * Get all the methods in a class with the specified modifiers (optionally, with the desired annotation),
 	 * as well as those in its superclasses.
 	 *
 	 * @see Class#getDeclaredMethods()
 	 * @param clazz The class to get all methods in
+	 * @param modifiers the modifier mask
 	 * @param includeObject Whether to include methods in {@link Object}
 	 * @param annotations if not null, only include methods with any of these
 	 * annotations
 	 * @return The public methods in the class
 	 */
-	public static List<Method> getDeclaredMethodsRecur(Class<?> clazz, boolean includeObject, Class<? extends Annotation>... annotations) {
+	public static List<Method> getDeclaredMethodsRecur(Class<?> clazz, int modifiers, boolean includeObject, Class<? extends Annotation>... annotations) {
 		final List<Method> methods = new ArrayList<Method>();
 		while (clazz != null && (includeObject || !Object.class.equals(clazz))) {
 			for (Method method : clazz.getDeclaredMethods()) {
-				if (annotations == null || hasAnyAnnotation(method, annotations)) {
+				if ((annotations == null || hasAnyAnnotation(method, annotations)) && hasModifiers(method, modifiers)) {
 					methods.add(method);
 				}
 			}
 			clazz = clazz.getSuperclass();
 		}
 		return methods;
+	}
+
+	/**
+	 * Check if the {@link Member} has all of the specified modifiers.
+	 *
+	 * @param member the Member to check
+	 * @param modifiers the modifier mask
+	 * @return Whether or not the member has all the modifiers.
+	 */
+	public static boolean hasModifiers(Member member, int modifiers) {
+		return (modifiers & member.getModifiers()) == modifiers;
 	}
 
 	/**
