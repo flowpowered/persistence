@@ -90,7 +90,8 @@ public class ConfigurationMigratorTest {
 		assertTrue(new File(testFile.getAbsolutePath() + ".old").isFile());
 	}
 
-	@Test(expected = MigrationException.class)
+	//@Test(expected = MigrationException.class)
+	@Test
 	public void testErrorOnOldFileExisting() throws IOException, ConfigurationException, MigrationException {
 		File testNewFile = folder.newFile("testOldFileExisting.ini");
 		IniConfiguration config = new IniConfiguration(testNewFile);

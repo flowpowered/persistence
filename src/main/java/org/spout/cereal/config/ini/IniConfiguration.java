@@ -319,7 +319,7 @@ public class IniConfiguration extends AbstractConfiguration implements Commented
 	 * Returns the String representation of a configuration value for writing to the file
 	 *
 	 * @param value
-	 * @return
+	 * @return string representation
 	 */
 	public String toStringValue(Object value) {
 		if (value == null) {

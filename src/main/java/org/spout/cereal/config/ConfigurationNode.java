@@ -260,10 +260,10 @@ public class ConfigurationNode extends AbstractConfigurationNodeSource implement
 	}
 
 	/**
-	 * Sets the
+	 * Sets the type and value
 	 * @param type
 	 * @param value
-	 * @return
+	 * @return the previous value
 	 */
 	public Object setValue(Type type, Object value) {
 		return setValue(Serialization.serialize(type, value));
