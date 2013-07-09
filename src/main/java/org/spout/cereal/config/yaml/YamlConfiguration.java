@@ -28,14 +28,9 @@ package org.spout.cereal.config.yaml;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -47,7 +42,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.xml.sax.InputSource;
+import org.spout.cereal.data.IOFactory;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
@@ -64,75 +59,32 @@ public class YamlConfiguration extends MapBasedConfiguration implements FileConf
 	public static final String LINE_BREAK = DumperOptions.LineBreak.getPlatformLineBreak().getString();
 	public static final char COMMENT_CHAR = '#';
 	public static final Pattern COMMENT_REGEX = Pattern.compile(COMMENT_CHAR + " ?(.*)");
-	private final File file;
-	private final InputStream stream;
-	private final String string;
-	private final Reader reader;
+	private final IOFactory factory;
 	private final Yaml yaml;
 	private String[] header = null;
 
-	public YamlConfiguration(File file) {
-		this.file = file;
-		this.stream = null;
-		this.string = null;
-		this.reader = null;
-
-		DumperOptions options = new DumperOptions();
-
-		options.setIndent(4);
-		options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
-
-		yaml = new Yaml(new SafeConstructor(), new EmptyNullRepresenter(), options);
+	public YamlConfiguration(java.io.File file) {
+		this(new IOFactory.File(file));
 	}
 
 	public YamlConfiguration(InputStream stream) {
-		this.file = null;
-		this.stream = stream;
-		this.string = null;
-		this.reader = null;
-
-		DumperOptions options = new DumperOptions();
-
-		options.setIndent(4);
-		options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
-
-		yaml = new Yaml(new SafeConstructor(), new EmptyNullRepresenter(), options);
+		this(new IOFactory.Stream(stream, null));
 	}
 
 	public YamlConfiguration(Reader reader) {
-		this.file = null;
-		this.stream = null;
-		this.string = null;
-		this.reader = reader;
-
-		DumperOptions options = new DumperOptions();
-
-		options.setIndent(4);
-		options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
-
-		yaml = new Yaml(new SafeConstructor(), new EmptyNullRepresenter(), options);
+		this(new IOFactory.Direct(reader, null));
 	}
 
 	public YamlConfiguration(String string) {
-		this.file = null;
-		this.stream = null;
-		this.string = string;
-		this.reader = null;
-
-		DumperOptions options = new DumperOptions();
-
-		options.setIndent(4);
-		options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
-
-		yaml = new Yaml(new SafeConstructor(), new EmptyNullRepresenter(), options);
+		this(new IOFactory.String(string));
 	}
 
 	public YamlConfiguration() {
-		this.file = null;
-		this.stream = null;
-		this.string = null;
-		this.reader = null;
+		this((IOFactory) null);
+	}
 
+	public YamlConfiguration(IOFactory factory) {
+		this.factory = factory;
 		DumperOptions options = new DumperOptions();
 
 		options.setIndent(4);
@@ -144,18 +96,11 @@ public class YamlConfiguration extends MapBasedConfiguration implements FileConf
 	@Override
 	protected Map<?, ?> loadToMap() throws ConfigurationException {
 		// Allow the usage of temporary empty YamlConfiguration objects.
-		if (file == null && stream == null && string == null) {
+		if (factory == null) {
 			return Collections.emptyMap();
 		}
 		BufferedReader in = null;
 		try {
-			if (file != null && !file.exists()) {
-				if (file.getParentFile() != null) {
-					file.getParentFile().mkdirs();
-				}
-				file.createNewFile();
-			}
-
 			in = new BufferedReader(getReader());
 			List<String> header = new ArrayList<String>();
 			boolean inHeader = true;
@@ -200,16 +145,10 @@ public class YamlConfiguration extends MapBasedConfiguration implements FileConf
 	@Override
 	protected void saveFromMap(Map<?, ?> map) throws ConfigurationException {
 		// Allow the usage of YamlConfiguration objects not created from a File.
-		if (file == null) {
+		if (factory == null) {
 			return;
 		}
 		BufferedWriter writer = null;
-
-		File parent = file.getParentFile();
-
-		if (parent != null) {
-			parent.mkdirs();
-		}
 
 		try {
 			writer = new BufferedWriter(getWriter());
@@ -289,23 +228,19 @@ public class YamlConfiguration extends MapBasedConfiguration implements FileConf
 	}
 
 	@Override
-	public File getFile() {
-		return file;
+	public java.io.File getFile() {
+		return factory instanceof IOFactory.File ? ((IOFactory.File) factory).getFile() : null;
+	}
+
+	public IOFactory getIOFactory() {
+		return factory;
 	}
 
 	protected Reader getReader() throws IOException {
-		if (reader != null) {
-			return reader;
-		} else if (file != null) {
-			return new InputStreamReader(new FileInputStream(file), "UTF-8");
-		} else if (stream != null) {
-			return new InputStreamReader(stream, "UTF-8");
-		} else {
-			return new InputStreamReader((new InputSource(new StringReader(string))).getByteStream(), "UTF-8");
-		}
+		return factory == null ? null : factory.createReader();
 	}
 
 	protected Writer getWriter() throws IOException {
-		return new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
+		return factory == null ? null : factory.createWriter();
 	}
 }

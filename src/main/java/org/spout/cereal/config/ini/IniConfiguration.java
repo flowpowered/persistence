@@ -56,6 +56,7 @@ import org.spout.cereal.config.ConfigurationNode;
 import org.spout.cereal.config.FileConfiguration;
 import org.spout.cereal.config.commented.CommentedConfiguration;
 import org.spout.cereal.config.commented.CommentedConfigurationNode;
+import org.spout.cereal.data.IOFactory;
 
 import static org.spout.cereal.config.commented.CommentedConfigurationNode.LINE_SEPARATOR;
 
@@ -98,10 +99,14 @@ public class IniConfiguration extends AbstractConfiguration implements Commented
 	public static final Pattern COMMENT_REGEX = Pattern.compile("[" +COMMENT_CHAR_SEMICOLON + COMMENT_CHAR_HASH + "] ?(.*)");
 	public static final Pattern SECTION_REGEX = Pattern.compile("\\[(.*)\\]");
 	private char preferredCommentChar = COMMENT_CHAR_HASH;
-	private final File file;
+	private final IOFactory factory;
 
 	public IniConfiguration(File file) {
-		this.file = file;
+		this(new IOFactory.File(file));
+	}
+
+	public IniConfiguration(IOFactory factory) {
+		this.factory = factory;
 	}
 
 	@Override
@@ -383,17 +388,21 @@ public class IniConfiguration extends AbstractConfiguration implements Commented
 		return new CommentedConfigurationNode(getConfiguration(), path, value);
 	}
 
+	public IOFactory getIOFactory() {
+		return factory;
+	}
+
 	protected Reader getReader() throws IOException {
-		return new InputStreamReader(new FileInputStream(file), "UTF-8");
+		return factory.createReader();
 	}
 
 	protected Writer getWriter() throws IOException {
-		return new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
+		return factory.createWriter();
 	}
 
 	@Override
 	public File getFile() {
-		return file;
+		return factory instanceof IOFactory.File ? ((IOFactory.File) factory).getFile() : null;
 	}
 
 	public char getPreferredCommentChar() {

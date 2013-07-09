@@ -26,48 +26,27 @@
  */
 package org.spout.cereal.config.ini;
 
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
+import org.spout.cereal.data.IOFactory;
 
 /**
  * A subclass of IniConfiguration that loads from a String
  *
  */
 public class StringLoadingIniConfiguration extends IniConfiguration {
-	private String value;
-	private StringWriter writer;
 	public StringLoadingIniConfiguration(String value) {
-		super(null);
-		this.value = value;
+		super(new IOFactory.String(value));
 	}
 
 	@Override
-	protected Reader getReader() {
-		return new StringReader(value);
+	public IOFactory.String getIOFactory() {
+		return (IOFactory.String) super.getIOFactory();
 	}
 
-	/**
-	 * Set the value to load from.  {@link #load()} needs to be called separately for
-	 * the value passed in this method to affect the actual configuration data.
-	 *
-	 * @param value The configuration value
-	 */
 	public void setValue(String value) {
-		this.value = value == null ? "" : value;
+		getIOFactory().setData(value);
 	}
 
 	public String getValue() {
-		if (writer != null) {
-			value = writer.toString();
-			writer = null;
-		}
-		return value;
-	}
-
-	@Override
-	protected Writer getWriter() {
-		return writer = new StringWriter();
+		return getIOFactory().getBuffer().toString();
 	}
 }
