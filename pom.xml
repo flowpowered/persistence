@@ -5,15 +5,23 @@
 	<name>Cerealization</name>
 	<groupId>org.spout</groupId>
 	<artifactId>cereal</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<url>http://www.spout.org</url>
 	<inceptionYear>2013</inceptionYear>
-	<description></description>
+	<description>Flexible configuration library developed for the Spout voxel game engine.</description>
+
+	<!-- Parent information -->
+	<parent>
+		<groupId>org.spout</groupId>
+		<artifactId>shared-parent</artifactId>
+		<version>1</version>
+	</parent>
 
 	<!-- Project properties -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<buildNumber>0</buildNumber><!-- DO NOT TOUCH! -->
+		<buildNumber>0</buildNumber>
 	</properties>
 
 	<!-- Organization information -->
@@ -50,18 +58,6 @@
 		<system>jira</system>
 		<url>https://spoutdev.atlassian.net/browse/CEREAL</url>
 	</issueManagement>
-
-	<!-- Dependency repositories -->
-	<repositories>
-		<repository>
-			<id>spout-repo</id>
-			<url>http://nexus.spout.org/content/groups/public/</url>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>always</updatePolicy>
-			</snapshots>
-		</repository>
-	</repositories>
 
 	<!-- Project dependencies -->
 	<dependencies>
@@ -106,13 +102,13 @@
 		<dependency>
 			<groupId>org.powermock</groupId>
 			<artifactId>powermock-api-mockito</artifactId>
-			<version>1.5</version>
+			<version>1.5.1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.powermock</groupId>
 			<artifactId>powermock-module-junit4</artifactId>
-			<version>1.5</version>
+			<version>1.5.1</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -179,8 +175,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.7</source>
+					<target>1.7</target>
 					<compilerArguments>
 						<O>-Xlint:all</O>
 						<O>-Xlint:-path</O>
