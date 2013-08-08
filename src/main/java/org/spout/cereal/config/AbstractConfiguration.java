@@ -32,8 +32,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.ArrayUtils;
 
 /**
- * A basic implementation of {@link Configuration} using {@link ConfigurationNodeSource}
- * method implementations from {@link AbstractConfigurationNodeSource}
+ * A basic implementation of {@link Configuration} using {@link ConfigurationNodeSource} method implementations from {@link AbstractConfigurationNodeSource}
  */
 public abstract class AbstractConfiguration extends AbstractConfigurationNodeSource implements Configuration {
 	private String pathSeparator;
@@ -49,6 +48,7 @@ public abstract class AbstractConfiguration extends AbstractConfigurationNodeSou
 
 	/**
 	 * Implementations can use this method to provide the necessary data for calls of load.
+	 *
 	 * @return A map with raw configuration data
 	 * @throws ConfigurationException when an error occurs while loading.
 	 */
@@ -56,6 +56,7 @@ public abstract class AbstractConfiguration extends AbstractConfigurationNodeSou
 
 	/**
 	 * Save the  data from this configuration. This method is called from {@link #save()}
+	 *
 	 * @param nodes Configuration as a set of nested ConfigurationNodes
 	 * @throws ConfigurationException When an error occurs while saving the given data.
 	 */

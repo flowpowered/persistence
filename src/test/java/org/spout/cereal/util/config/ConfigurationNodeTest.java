@@ -38,10 +38,12 @@ import org.spout.cereal.config.Configuration;
 import org.spout.cereal.config.ConfigurationNode;
 import org.spout.cereal.config.MapConfiguration;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class ConfigurationNodeTest {
 	private Configuration base;
+
 	@Before
 	public void setUp() {
 		base = new MapConfiguration();
@@ -64,6 +66,7 @@ public class ConfigurationNodeTest {
 		assertEquals(new HashSet<String>(Arrays.asList("a")), base.getKeys(false));
 		assertEquals(new HashSet<String>(Arrays.asList("a", "a.a1", "a.a2", "a.a3", "a.a3.c3")), base.getKeys(true));
 	}
+
 	@Test
 	public void testGetValues() {
 		ConfigurationNode parent = base.getChild("a");

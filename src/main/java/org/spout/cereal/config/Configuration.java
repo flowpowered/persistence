@@ -44,35 +44,32 @@ public interface Configuration extends ConfigurationNodeSource {
 	void save() throws ConfigurationException;
 
 	/**
-	 * Adds the given node to the configuration structure
-	 * This will attempt to use the node's existing parents in the configuration structure where possible
+	 * Adds the given node to the configuration structure This will attempt to use the node's existing parents in the configuration structure where possible
 	 *
 	 * @param node The node to add
 	 */
 	void setNode(ConfigurationNode node);
 
 	/**
-	 * The path separator to use with {@link #getNode(String)}
-	 * The path separator splits paths as a literal string, not a regular expression.
+	 * The path separator to use with {@link #getNode(String)} The path separator splits paths as a literal string, not a regular expression.
 	 *
 	 * @return The configuration's path separator
 	 */
 	String getPathSeparator();
 
 	/**
-	 * Sets this configuration's path separator. More information on how the path separator
-	 * functions in {@link #getPathSeparator()}
+	 * Sets this configuration's path separator. More information on how the path separator functions in {@link #getPathSeparator()}
 	 *
-	 * @see #getPathSeparator()
 	 * @param pathSeparator The path separator
+	 * @see #getPathSeparator()
 	 */
 	void setPathSeparator(String pathSeparator);
 
 	Pattern getPathSeparatorPattern();
 
 	/**
-	 * Whether this configuration writes default values (from {@link ConfigurationNode#getValue(Object)}
-	 * to the configuration structure
+	 * Whether this configuration writes default values (from {@link ConfigurationNode#getValue(Object)} to the configuration structure
+	 *
 	 * @return Whether this configuration writes defaults
 	 */
 	boolean doesWriteDefaults();
@@ -80,15 +77,14 @@ public interface Configuration extends ConfigurationNodeSource {
 	/**
 	 * Sets whether this configuration writes defaults
 	 *
-	 * @see #doesWriteDefaults() for info on what this means
 	 * @param writesDefaults Whether this configuration writes defaults
+	 * @see #doesWriteDefaults() for info on what this means
 	 */
 	void setWritesDefaults(boolean writesDefaults);
 
 	/**
-	 * Split the provided path into a string array suitable for accessing the correct configuration children.
-	 * Normally this just splits the path with the {@link #getPathSeparator()}, but can limit
-	 * how deep a child path can go or whether this configuration can even have children.
+	 * Split the provided path into a string array suitable for accessing the correct configuration children. Normally this just splits the path with the {@link #getPathSeparator()}, but can limit how
+	 * deep a child path can go or whether this configuration can even have children.
 	 *
 	 * @param path The path to split
 	 * @return The connectly split path.
@@ -96,9 +92,8 @@ public interface Configuration extends ConfigurationNodeSource {
 	String[] splitNodePath(String path);
 
 	/**
-	 * Make sure the provided path meets the requirements. A correct implementation of
-	 * Configuration will impose the same restrictions on this and {@link #splitNodePath(String)},
-	 * so invoking this method on an array from {@link #splitNodePath(String)} would return the original array.
+	 * Make sure the provided path meets the requirements. A correct implementation of Configuration will impose the same restrictions on this and {@link #splitNodePath(String)}, so invoking this method
+	 * on an array from {@link #splitNodePath(String)} would return the original array.
 	 *
 	 * @param rawPath The raw path of the configuration
 	 * @return The corrected input path

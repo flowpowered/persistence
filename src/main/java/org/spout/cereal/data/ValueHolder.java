@@ -251,10 +251,8 @@ public interface ValueHolder {
 	public abstract List<?> getList(List<?> def);
 
 	/**
-	 * Return this node's value as a string list.
-	 * Note that this will not necessarily return the same collection that is in this configuration's value.
-	 * This means that changes to the return value of this method might not affect the
-	 * configuration, so after changes the value of this node should be set to this list.
+	 * Return this node's value as a string list. Note that this will not necessarily return the same collection that is in this configuration's value. This means that changes to the return value of this
+	 * method might not affect the configuration, so after changes the value of this node should be set to this list.
 	 *
 	 * @return the string list value
 	 * @see #getStringList(java.util.List)
@@ -263,10 +261,8 @@ public interface ValueHolder {
 	public List<String> getStringList();
 
 	/**
-	 * Return this node's value as a string list.
-	 * Note that this will not necessarily return the same collection that is in this configuration's value.
-	 * This means that changes to the return value of this method might not affect the
-	 * configuration, so after changes the value of this node should be set to this list.
+	 * Return this node's value as a string list. Note that this will not necessarily return the same collection that is in this configuration's value. This means that changes to the return value of this
+	 * method might not affect the configuration, so after changes the value of this node should be set to this list.
 	 *
 	 * @param def The default value, returned if this node doesn't have a set value or the value isn't a boolean. If this is null it will act as an empty list.
 	 * @return the string list value
@@ -275,10 +271,8 @@ public interface ValueHolder {
 	public abstract List<String> getStringList(List<String> def);
 
 	/**
-	 * Return this node's value as an integer list.
-	 * Note that this will not necessarily return the same collection that is in this configuration's value.
-	 * This means that changes to the return value of this method might not affect the
-	 * configuration, so after changes the value of this node should be set to this list.
+	 * Return this node's value as an integer list. Note that this will not necessarily return the same collection that is in this configuration's value. This means that changes to the return value of
+	 * this method might not affect the configuration, so after changes the value of this node should be set to this list.
 	 *
 	 * @return the integer list value
 	 * @see #getStringList(java.util.List)
@@ -287,10 +281,8 @@ public interface ValueHolder {
 	public List<Integer> getIntegerList();
 
 	/**
-	 * Return this node's value as a string list.
-	 * Note that this will not necessarily return the same collection that is in this value.
-	 * This means that changes to the return value of this method might not affect the
-	 * value, so after changes the value of this node should be set to this list.
+	 * Return this node's value as a string list. Note that this will not necessarily return the same collection that is in this value. This means that changes to the return value of this method might
+	 * not affect the value, so after changes the value of this node should be set to this list.
 	 *
 	 * @param def The default value, returned if this node doesn't have a set value or the value isn't a boolean. If this is null it will act as an empty list.
 	 * @return the string list value

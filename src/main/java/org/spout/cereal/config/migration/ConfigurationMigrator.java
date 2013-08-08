@@ -39,8 +39,7 @@ import org.spout.cereal.config.ConfigurationNode;
 import org.spout.cereal.config.FileConfiguration;
 
 /**
- * A simple migrator for configurations that moves values from one key to another.
- * It can also convert values
+ * A simple migrator for configurations that moves values from one key to another. It can also convert values
  */
 public abstract class ConfigurationMigrator {
 	private final Configuration configuration;
@@ -51,8 +50,7 @@ public abstract class ConfigurationMigrator {
 	}
 
 	/**
-	 * Put together a collection of all keys to be migrated and their associated actions.
-	 * This can be put in a static HashMap, or generated on each invocation
+	 * Put together a collection of all keys to be migrated and their associated actions. This can be put in a static HashMap, or generated on each invocation
 	 *
 	 * @return The map of configuration keys to their associated actions
 	 */
@@ -70,10 +68,9 @@ public abstract class ConfigurationMigrator {
 	protected abstract boolean shouldMigrate();
 
 	/**
-	 * Perform migration of the configuration this object was constructed with
-	 * If migration was not necessary ({@link #shouldMigrate()} returned false), the method invocation will be considered successful.
-	 * If {@link #configuration} is a {@link org.spout.cereal.config.FileConfiguration}, the file the configuration vas previously stored in will be
-	 * moved to (file name).old as a backup of the data before migration
+	 * Perform migration of the configuration this object was constructed with If migration was not necessary ({@link #shouldMigrate()} returned false), the method invocation will be considered
+	 * successful. If {@link #configuration} is a {@link org.spout.cereal.config.FileConfiguration}, the file the configuration vas previously stored in will be moved to (file name).old as a backup of
+	 * the data before migration
 	 *
 	 * @throws MigrationException if the configuration could not be successfully migrated
 	 */

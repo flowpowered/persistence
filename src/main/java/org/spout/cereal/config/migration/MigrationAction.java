@@ -27,8 +27,7 @@
 package org.spout.cereal.config.migration;
 
 /**
- * Represents the two sides of migrating an existing configuration key:
- * Converting the key and converting the value
+ * Represents the two sides of migrating an existing configuration key: Converting the key and converting the value
  */
 public interface MigrationAction {
 	/**
@@ -38,6 +37,7 @@ public interface MigrationAction {
 	 * @return The key modified to its new value
 	 */
 	public String[] convertKey(String[] key);
+
 	/**
 	 * This method converts the old configuration value to its migrated value.
 	 *

@@ -47,7 +47,7 @@ public class ConfigurationBaseSerializer extends Serializer {
 
 	@Override
 	public boolean isApplicable(GenericType type) {
-		return AnnotatedSubclassConfiguration.class.isAssignableFrom(type.getMainType()) ;
+		return AnnotatedSubclassConfiguration.class.isAssignableFrom(type.getMainType());
 	}
 
 	@Override

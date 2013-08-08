@@ -31,18 +31,16 @@ import java.util.Set;
 
 public interface ConfigurationNodeSource {
 	/**
-	 * Gets a child of the current node.
-	 * Remember that this returns a DIRECT child, without splitting at the {@link org.spout.cereal.config.Configuration#getPathSeparator()}
+	 * Gets a child of the current node. Remember that this returns a DIRECT child, without splitting at the {@link org.spout.cereal.config.Configuration#getPathSeparator()}
 	 *
 	 * @param name The name of the child
-	 * @see #getChild(String, boolean)
 	 * @return The ConfigurationNode with the child's path.
+	 * @see #getChild(String, boolean)
 	 */
 	public ConfigurationNode getChild(String name);
 
 	/**
-	 * Gets a child of the current node.
-	 * Remember that this returns a DIRECT child, without splitting at the {@link org.spout.cereal.config.Configuration#getPathSeparator()}
+	 * Gets a child of the current node. Remember that this returns a DIRECT child, without splitting at the {@link org.spout.cereal.config.Configuration#getPathSeparator()}
 	 *
 	 * @param name The name of the child
 	 * @param add Whether to store the configuration to the node structure.
@@ -51,8 +49,7 @@ public interface ConfigurationNodeSource {
 	public ConfigurationNode getChild(String name, boolean add);
 
 	/**
-	 * Adds the provided node as a child to this one
-	 * As with the other methods handling children, this method only works with DIRECT children
+	 * Adds the provided node as a child to this one As with the other methods handling children, this method only works with DIRECT children
 	 *
 	 * @param node The node to add as a child
 	 * @return The previous node at the specified path (can be null)
@@ -60,8 +57,7 @@ public interface ConfigurationNodeSource {
 	public ConfigurationNode addChild(ConfigurationNode node);
 
 	/**
-	 * Adds a new node as a child to this one
-	 * Will overwrite existing
+	 * Adds a new node as a child to this one Will overwrite existing
 	 *
 	 * @param name The path to the node to add
 	 * @return The previous node at the specified path (can be null)
@@ -71,8 +67,8 @@ public interface ConfigurationNodeSource {
 	/**
 	 * Add the given children. The process for adding children is the same as that for {@link #addChild(ConfigurationNode)}
 	 *
-	 * @see #addChild(ConfigurationNode)
 	 * @param nodes The nodes to add
+	 * @see #addChild(ConfigurationNode)
 	 */
 	public void addChildren(ConfigurationNode... nodes);
 
@@ -100,17 +96,15 @@ public interface ConfigurationNodeSource {
 	public Map<String, ConfigurationNode> getChildren();
 
 	/**
-	 * Return the raw Object values of this node's children
-	 * ConfigurationNodes are converted into Map<String, Object>s for the result of this method
+	 * Return the raw Object values of this node's children ConfigurationNodes are converted into Map<String, Object>s for the result of this method
 	 *
 	 * @return The node's children values
 	 */
 	public Map<String, Object> getValues();
 
 	/**
-	 * Return the keys in this configuration. If {@code deep} is true, this will also
-	 * include paths from child nodes, joined by {@link org.spout.cereal.config.Configuration#getPathSeparator()}
-	 * Keys returned are relative to the current node.
+	 * Return the keys in this configuration. If {@code deep} is true, this will also include paths from child nodes, joined by {@link org.spout.cereal.config.Configuration#getPathSeparator()} Keys
+	 * returned are relative to the current node.
 	 *
 	 * @param deep Whether to also fetch keys in children nodes of this configuration
 	 * @return the keys in this configuration
@@ -118,20 +112,17 @@ public interface ConfigurationNodeSource {
 	public Set<String> getKeys(boolean deep);
 
 	/**
-	 * Returns the node at the specified child path, splitting by the configuration's
-	 * path separator. This can return both direct children and indirect children.
-	 * @see #getNode(String...) for more information on how this method behaves. (This is
-	 * also the method called when a path given contains the path separator)
+	 * Returns the node at the specified child path, splitting by the configuration's path separator. This can return both direct children and indirect children.
 	 *
 	 * @param path The path to get a node at
 	 * @return The node at the specified path
+	 * @see #getNode(String...) for more information on how this method behaves. (This is also the method called when a path given contains the path separator)
 	 */
 	public ConfigurationNode getNode(String path);
 
 	/**
-	 * Get a child node of this node source, going across multiple levels.
-	 * If there is no node at the specified path a detached configuration node will be
-	 * returned, which will be attached to {@link #getConfiguration()} if its value is set or a child is added.
+	 * Get a child node of this node source, going across multiple levels. If there is no node at the specified path a detached configuration node will be returned, which will be attached to {@link
+	 * #getConfiguration()} if its value is set or a child is added.
 	 *
 	 * @param path The path elements to get to the requested node.
 	 * @return The child node. Never null.
@@ -139,8 +130,7 @@ public interface ConfigurationNodeSource {
 	public ConfigurationNode getNode(String... path);
 
 	/**
-	 * Returns whether this node source has children.
-	 * This is the same as running {@code getChildren().size() > 0}
+	 * Returns whether this node source has children. This is the same as running {@code getChildren().size() > 0}
 	 *
 	 * @return whether this node source has children
 	 */
@@ -163,16 +153,14 @@ public interface ConfigurationNodeSource {
 	public boolean hasNode(String... path);
 
 	/**
-	 * Returns the configuration this node source is attached to.
-	 * This may return the same object if this {@link ConfigurationNodeSource} is a Configuration.
+	 * Returns the configuration this node source is attached to. This may return the same object if this {@link ConfigurationNodeSource} is a Configuration.
 	 *
 	 * @return the attached configuration.
 	 */
 	public Configuration getConfiguration();
 
 	/**
-	 * Returns the elements of the configuration path going to this node source. Can return
-	 * an empty array if we are at the root of the tree.
+	 * Returns the elements of the configuration path going to this node source. Can return an empty array if we are at the root of the tree.
 	 *
 	 * @return the elements to here
 	 */

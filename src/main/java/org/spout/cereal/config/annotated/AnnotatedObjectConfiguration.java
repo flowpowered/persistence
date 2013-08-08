@@ -46,14 +46,8 @@ import org.spout.cereal.config.ConfigurationNode;
 import org.spout.cereal.config.ConfigurationNodeSource;
 
 /**
- * A configuration wrapper used to save annotated objects.
- * <p>
- * Fields from objects annotated with Setting will be saved to the configuration
- * file. Methods from objects annotated with Load or Save and with a
- * ConfigurationNode as a parameter will be invoked during the corresponding
- * event.
- * <p>
- * Example:
+ * A configuration wrapper used to save annotated objects. <p> Fields from objects annotated with Setting will be saved to the configuration file. Methods from objects annotated with Load or Save and
+ * with a ConfigurationNode as a parameter will be invoked during the corresponding event. <p> Example:
  *
  * <pre>
  * public class AnnotatedObjectExample {
@@ -75,10 +69,7 @@ import org.spout.cereal.config.ConfigurationNodeSource;
  * }
  * </pre>
  *
- * A new instance is made from the class above, and the object is saved with
- * path "example".
- * <p>
- * This will result in a configuration file which will look like this:
+ * A new instance is made from the class above, and the object is saved with path "example". <p> This will result in a configuration file which will look like this:
  *
  * <pre>
  * example:
@@ -87,7 +78,6 @@ import org.spout.cereal.config.ConfigurationNodeSource;
  *         bar: hello world
  *     abc: 1234567890
  * </pre>
- *
  */
 public class AnnotatedObjectConfiguration extends AnnotatedConfiguration {
 	private final Map<Object, Set<Member>> objectMembers = new HashMap<Object, Set<Member>>();
@@ -100,33 +90,22 @@ public class AnnotatedObjectConfiguration extends AnnotatedConfiguration {
 	}
 
 	/**
-	 * Creates a new AnnotatedObjectConfiguration wrapper wrapping the provided
-	 * configuration.
+	 * Creates a new AnnotatedObjectConfiguration wrapper wrapping the provided configuration.
 	 */
 	public AnnotatedObjectConfiguration(Configuration config) {
 		super(config);
 	}
 
 	/**
-	 * Adds an object or a class to be saved or loaded by the configuration.
-	 * <p>
-	 * The node path of the object in the configuration is specified as an array
-	 * (varargs) of strings. Only annotated fields and methods will be used.
-	 * <p>
-	 * The individual paths of the fields can be specified with the Setting
-	 * annotation. If none are specified, the field name is used.
-	 * <p>
-	 * A field named "exa" annotated with {@code @Setting({"cd.ef"})} in an object with
-	 * path "ab" will have its value saved at "ab.cd.ef". If no path is
-	 * specified in Setting, the path will be "ab.exa".
-	 * <p>
-	 * If the target is a class, only static fields and methods will be registered.
+	 * Adds an object or a class to be saved or loaded by the configuration. <p> The node path of the object in the configuration is specified as an array (varargs) of strings. Only annotated fields and
+	 * methods will be used. <p> The individual paths of the fields can be specified with the Setting annotation. If none are specified, the field name is used. <p> A field named "exa" annotated with
+	 * {@code @Setting({"cd.ef"})} in an object with path "ab" will have its value saved at "ab.cd.ef". If no path is specified in Setting, the path will be "ab.exa". <p> If the target is a class, only
+	 * static fields and methods will be registered.
 	 *
 	 * @param object The object or class to load or save
-	 * @param path The path at which the object or class should be or is located in the
-	 * configuration
+	 * @param path The path at which the object or class should be or is located in the configuration
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings ("unchecked")
 	public void add(Object object, String... path) {
 		if (!objectMembers.containsKey(object)) {
 			final Set<Member> members = new HashSet<Member>();
@@ -145,8 +124,7 @@ public class AnnotatedObjectConfiguration extends AnnotatedConfiguration {
 	}
 
 	/**
-	 * Removes an object or a class from the configuration. It will not be used during the
-	 * next save or load invocations.
+	 * Removes an object or a class from the configuration. It will not be used during the next save or load invocations.
 	 *
 	 * @param object the object or the class to remove
 	 */
@@ -162,7 +140,7 @@ public class AnnotatedObjectConfiguration extends AnnotatedConfiguration {
 			load(source, object instanceof Class<?> ? null : object, objectPaths.get(object), entry.getValue());
 		}
 	}
-	
+
 	private void load(ConfigurationNodeSource source, Object object, String[] path, Set<Member> members) throws ConfigurationException {
 		final Set<Method> methods = new HashSet<Method>();
 		for (Member member : members) {
@@ -177,7 +155,7 @@ public class AnnotatedObjectConfiguration extends AnnotatedConfiguration {
 			field.setAccessible(true);
 			String[] fieldPath = field.getAnnotation(Setting.class).value();
 			if (fieldPath.length == 0) {
-				fieldPath = new String[]{field.getName()};
+				fieldPath = new String[] {field.getName()};
 			}
 			final ConfigurationNode fieldNode = source.getNode(ArrayUtils.addAll(path, fieldPath));
 			final Object value = fieldNode.getTypedValue(field.getGenericType());
@@ -201,7 +179,7 @@ public class AnnotatedObjectConfiguration extends AnnotatedConfiguration {
 			save(source, object instanceof Class<?> ? null : object, objectPaths.get(object), entry.getValue());
 		}
 	}
-	
+
 	private void save(ConfigurationNodeSource source, Object object, String[] path, Set<Member> members) throws ConfigurationException {
 		final Set<Method> methods = new HashSet<Method>();
 		for (Member member : members) {
@@ -216,7 +194,7 @@ public class AnnotatedObjectConfiguration extends AnnotatedConfiguration {
 			field.setAccessible(true);
 			String[] fieldPath = field.getAnnotation(Setting.class).value();
 			if (fieldPath.length == 0) {
-				fieldPath = new String[]{field.getName()};
+				fieldPath = new String[] {field.getName()};
 			}
 			final ConfigurationNode fieldNode = source.getNode(ArrayUtils.addAll(path, fieldPath));
 			try {

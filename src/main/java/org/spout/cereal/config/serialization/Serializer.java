@@ -33,6 +33,7 @@ import java.util.Comparator;
  */
 public abstract class Serializer {
 	private boolean allowsNullValue;
+
 	public Object deserialize(GenericType type, Object value) {
 		if (value == null && !allowsNullValue()) {
 			return null;
@@ -86,7 +87,6 @@ public abstract class Serializer {
 	}
 
 	public static class NeededGenericsComparator implements Comparator<Serializer> {
-
 		@Override
 		public int compare(Serializer a, Serializer b) {
 			return Integer.valueOf(a.getParametersRequired()).compareTo(b.getParametersRequired());

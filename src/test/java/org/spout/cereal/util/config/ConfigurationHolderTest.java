@@ -32,13 +32,13 @@ import org.spout.cereal.config.Configuration;
 import org.spout.cereal.config.ConfigurationHolder;
 import org.spout.cereal.config.MapConfiguration;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ConfigurationHolderTest {
 	@Test
 	public void testGetWithDefaultValue() {
 		Configuration config = new MapConfiguration();
-		ConfigurationHolder subject = new ConfigurationHolder(config, (Object)"hello", "unknown", "path");
+		ConfigurationHolder subject = new ConfigurationHolder(config, (Object) "hello", "unknown", "path");
 		assertEquals("hello", subject.getString());
 	}
 
@@ -46,14 +46,14 @@ public class ConfigurationHolderTest {
 	public void testGetExistingValue() {
 		Configuration config = new MapConfiguration();
 		config.getNode("path", "with", "value").setValue("valuehere");
-		ConfigurationHolder subject = new ConfigurationHolder(config, (Object)null, "path", "with", "value");
+		ConfigurationHolder subject = new ConfigurationHolder(config, (Object) null, "path", "with", "value");
 		assertEquals("valuehere", subject.getValue());
 	}
 
 	@Test
 	public void testGettingNewValueWritesToConfig() {
 		Configuration config = new MapConfiguration();
-		ConfigurationHolder subject = new ConfigurationHolder(config, (Object)"hello", "unknown", "path");
+		ConfigurationHolder subject = new ConfigurationHolder(config, (Object) "hello", "unknown", "path");
 		subject.getValue();
 		assertEquals("hello", config.getNode("unknown", "path").getString());
 	}

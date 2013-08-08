@@ -30,7 +30,6 @@ import org.spout.cereal.data.IOFactory;
 
 /**
  * A subclass of IniConfiguration that loads from a String
- *
  */
 public class StringLoadingIniConfiguration extends IniConfiguration {
 	public StringLoadingIniConfiguration(String value) {

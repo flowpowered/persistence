@@ -34,8 +34,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.spout.cereal.data.ValueHolderBase;
 
 /**
- * This object holds a reference to a ConfigurationNode and provides all the methods to
- * get its value, but using the default provided in the constructor
+ * This object holds a reference to a ConfigurationNode and provides all the methods to get its value, but using the default provided in the constructor
  */
 public class ConfigurationHolder extends ValueHolderBase implements ConfigurationNodeSource {
 	private Configuration configuration;
@@ -75,6 +74,7 @@ public class ConfigurationHolder extends ValueHolderBase implements Configuratio
 
 	/**
 	 * Gets the default value of this Configuration Holder
+	 *
 	 * @return the default value
 	 */
 	public Object getDefaultValue() {
@@ -83,6 +83,7 @@ public class ConfigurationHolder extends ValueHolderBase implements Configuratio
 
 	/**
 	 * Sets the default value for this Configuration Holder
+	 *
 	 * @param def value to set to
 	 */
 	public void setDefaultValue(Object def) {

@@ -36,8 +36,7 @@ public class MapConfiguration extends MapBasedConfiguration {
 	private Map<?, ?> map;
 
 	/**
-	 * Create a new configuration backed by an empty map. Loading a configuration
-	 * instantiated with this constructor will do nothing.
+	 * Create a new configuration backed by an empty map. Loading a configuration instantiated with this constructor will do nothing.
 	 */
 	public MapConfiguration() {
 		this(null);
@@ -54,7 +53,7 @@ public class MapConfiguration extends MapBasedConfiguration {
 	}
 
 	@Override
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings ({"unchecked", "rawtypes"})
 	protected void saveFromMap(Map<?, ?> map) {
 		this.map.clear();
 		((Map) this.map).putAll(map);

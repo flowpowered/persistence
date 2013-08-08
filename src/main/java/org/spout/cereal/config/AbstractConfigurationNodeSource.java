@@ -106,9 +106,8 @@ public abstract class AbstractConfigurationNodeSource implements ConfigurationNo
 	}
 
 	/**
-	 * Detach a node from this node source and remove its children
-	 * If the node's parent isn't this, the method will silently return
-	 * After this method, the node will have a parent of null, no children, and be marked as detached
+	 * Detach a node from this node source and remove its children If the node's parent isn't this, the method will silently return After this method, the node will have a parent of null, no children,
+	 * and be marked as detached
 	 *
 	 * @param node The node to detach
 	 */
@@ -118,7 +117,7 @@ public abstract class AbstractConfigurationNodeSource implements ConfigurationNo
 		}
 		node.setAttached(false);
 		node.setParent(null);
-		for (Iterator<ConfigurationNode> i = node.children.values().iterator(); i.hasNext();) {
+		for (Iterator<ConfigurationNode> i = node.children.values().iterator(); i.hasNext(); ) {
 			node.detachChild(i.next());
 			i.remove();
 		}
@@ -211,11 +210,11 @@ public abstract class AbstractConfigurationNodeSource implements ConfigurationNo
 		path = getConfiguration().ensureCorrectPath(path);
 		AbstractConfigurationNodeSource current = this;
 		for (String key : path) {
-		ConfigurationNode node = current.children.get(key);
-		if (node == null) {
-			return false;
-		}
-		current = node;
+			ConfigurationNode node = current.children.get(key);
+			if (node == null) {
+				return false;
+			}
+			current = node;
 		}
 		return true;
 	}

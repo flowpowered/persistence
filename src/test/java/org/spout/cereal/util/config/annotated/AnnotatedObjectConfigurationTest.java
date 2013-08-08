@@ -81,33 +81,33 @@ public class AnnotatedObjectConfigurationTest {
 		Assert.assertEquals(LOAD_TEST_CONFIG_OBJECT_INT, object.configObject.integer);
 		Assert.assertEquals(LOAD_TEST_SPECIAL_NODE, object.special, 0);
 	}
-	
+
 	@Test
 	public void testClass() throws ConfigurationException {
 		{
 			final AnnotatedObjectConfiguration annotated = new AnnotatedObjectConfiguration(new MapConfiguration());
-				annotated.add(TestClass.class, "object");
-				annotated.save();
-				
+			annotated.add(TestClass.class, "object");
+			annotated.save();
+
 			Assert.assertEquals(SAVE_TEST_OBJECT_STRING, annotated.getNode("object", "string").getString());
 			Assert.assertEquals(SAVE_TEST_OBJECT_INT, annotated.getNode("object", "integer").getInt());
 			Assert.assertEquals(SAVE_TEST_CONFIG_OBJECT_STRING, annotated.getNode("object", "config-object", "obj-string").getString());
 			Assert.assertEquals(SAVE_TEST_CONFIG_OBJECT_INT, annotated.getNode("object", "config-object", "obj-integer").getInt());
 			Assert.assertEquals(SAVE_TEST_SPECIAL_NODE, annotated.getNode("object", "special", "node").getDouble(), 0);
 		}
-		
+
 		{
 			final MapConfiguration map = new MapConfiguration();
-				map.getNode("object", "string").setValue(LOAD_TEST_OBJECT_STRING);
-				map.getNode("object", "integer").setValue(LOAD_TEST_OBJECT_INT);
-				map.getNode("object", "config-object", "obj-string").setValue(LOAD_TEST_CONFIG_OBJECT_STRING);
-				map.getNode("object", "config-object", "obj-integer").setValue(LOAD_TEST_CONFIG_OBJECT_INT);
-				map.getNode("object", "special", "node").setValue(LOAD_TEST_SPECIAL_NODE);
-				
+			map.getNode("object", "string").setValue(LOAD_TEST_OBJECT_STRING);
+			map.getNode("object", "integer").setValue(LOAD_TEST_OBJECT_INT);
+			map.getNode("object", "config-object", "obj-string").setValue(LOAD_TEST_CONFIG_OBJECT_STRING);
+			map.getNode("object", "config-object", "obj-integer").setValue(LOAD_TEST_CONFIG_OBJECT_INT);
+			map.getNode("object", "special", "node").setValue(LOAD_TEST_SPECIAL_NODE);
+
 			final AnnotatedObjectConfiguration annotated = new AnnotatedObjectConfiguration(map);
-				annotated.add(TestClass.class, "object");
-				annotated.load(map);
-				
+			annotated.add(TestClass.class, "object");
+			annotated.load(map);
+
 			Assert.assertEquals(LOAD_TEST_OBJECT_STRING, TestClass.string);
 			Assert.assertEquals(LOAD_TEST_OBJECT_INT, TestClass.integer);
 			Assert.assertEquals(LOAD_TEST_CONFIG_OBJECT_STRING, TestClass.configObject.string);
@@ -115,14 +115,14 @@ public class AnnotatedObjectConfigurationTest {
 			Assert.assertEquals(LOAD_TEST_SPECIAL_NODE, TestClass.special, 0);
 		}
 	}
-	
+
 	private final static class TestClass {
 		@Setting
 		private static String string = SAVE_TEST_OBJECT_STRING;
 		@Setting
 		private static int integer = SAVE_TEST_OBJECT_INT;
 		private static final TestConfigObject configObject = new TestConfigObject();
-		@Setting({"special", "node"})
+		@Setting ({"special", "node"})
 		private static double special = SAVE_TEST_SPECIAL_NODE;
 
 		@Load
@@ -145,7 +145,7 @@ public class AnnotatedObjectConfigurationTest {
 		@Setting
 		private int integer = SAVE_TEST_OBJECT_INT;
 		private final TestConfigObject configObject = new TestConfigObject();
-		@Setting({"special", "node"})
+		@Setting ({"special", "node"})
 		private double special = SAVE_TEST_SPECIAL_NODE;
 
 		@Load

@@ -44,7 +44,6 @@ public class ConfigurationNode extends AbstractConfigurationNodeSource implement
 	private Object value;
 	private boolean attached;
 	private WeakReference<ConfigurationNodeSource> parent = new WeakReference<ConfigurationNodeSource>(null);
-
 	private final String[] path;
 	private final ValueHolderBase valueHolder = new ValueHolderBase(this);
 
@@ -247,7 +246,7 @@ public class ConfigurationNode extends AbstractConfigurationNodeSource implement
 		if (value instanceof Map<?, ?>) {
 			this.value = null;
 			removeChildren();
-			for (Map.Entry<?, ?> entry : ((Map<?, ?>)value).entrySet()) {
+			for (Map.Entry<?, ?> entry : ((Map<?, ?>) value).entrySet()) {
 				addChild(createConfigurationNode(ArrayUtils.add(getPathElements(), entry.getKey().toString()), entry.getValue()));
 			}
 		} else {
@@ -261,8 +260,7 @@ public class ConfigurationNode extends AbstractConfigurationNodeSource implement
 
 	/**
 	 * Sets the type and value
-	 * @param type
-	 * @param value
+	 *
 	 * @return the previous value
 	 */
 	public Object setValue(Type type, Object value) {
@@ -296,6 +294,7 @@ public class ConfigurationNode extends AbstractConfigurationNodeSource implement
 
 	/**
 	 * Return whether a ConfigurationNode is attached to any configuration
+	 *
 	 * @return if this node is attached to any configuration
 	 */
 	public boolean isAttached() {

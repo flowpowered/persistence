@@ -33,7 +33,10 @@ import org.spout.cereal.config.ConfigurationNode;
 import org.spout.cereal.config.commented.CommentedConfigurationNode;
 import org.spout.cereal.config.ini.StringLoadingIniConfiguration;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import static org.spout.cereal.config.commented.CommentedConfigurationNode.LINE_SEPARATOR;
 

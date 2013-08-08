@@ -45,7 +45,9 @@ import org.spout.cereal.config.migration.MigrationException;
 import org.spout.cereal.config.migration.NewJoinedKey;
 import org.spout.cereal.config.migration.NewKey;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ConfigurationMigratorTest {
 	@Rule
@@ -69,6 +71,7 @@ public class ConfigurationMigratorTest {
 			return true; // Always migrate so we can test easily
 		}
 	}
+
 	@Test
 	public void testNewJoinedKeyMigrationAction() {
 		ConfigurationMigrator migrator = new TestConfigurationMigrator(new MapConfiguration(), Collections.<String[], MigrationAction>emptyMap());

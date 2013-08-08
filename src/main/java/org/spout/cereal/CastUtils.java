@@ -35,6 +35,7 @@ public class CastUtils {
 
 	/**
 	 * Casts a value to a float. May return null.
+	 *
 	 * @param o The object to attempt to cast
 	 * @return The object as a float
 	 */
@@ -56,6 +57,7 @@ public class CastUtils {
 
 	/**
 	 * Casts a value to a byte. May return null.
+	 *
 	 * @param o The object to attempt to cast
 	 * @return The object as a byte
 	 */
@@ -77,6 +79,7 @@ public class CastUtils {
 
 	/**
 	 * Casts a value to a short. May return null.
+	 *
 	 * @param o The object to attempt to cast
 	 * @return The object as a short
 	 */
@@ -98,6 +101,7 @@ public class CastUtils {
 
 	/**
 	 * Casts a value to an integer. May return null.
+	 *
 	 * @param o The object to attempt to cast
 	 * @return The object as an int
 	 */
@@ -119,6 +123,7 @@ public class CastUtils {
 
 	/**
 	 * Casts a value to a double. May return null.
+	 *
 	 * @param o The object to attempt to cast
 	 * @return The object as a double
 	 */
@@ -140,6 +145,7 @@ public class CastUtils {
 
 	/**
 	 * Casts a value to a long. May return null.
+	 *
 	 * @param o The object to attempt to cast
 	 * @return The object as a long
 	 */
@@ -161,6 +167,7 @@ public class CastUtils {
 
 	/**
 	 * Casts a value to a boolean. May return null.
+	 *
 	 * @param o The object to attempt to cast
 	 * @return The object as a boolean
 	 */

@@ -37,9 +37,7 @@ import org.spout.cereal.config.ConfigurationNode;
 import org.spout.cereal.config.ConfigurationNodeSource;
 
 /**
- * The base class for annotated configurations Annotated configurations are
- * created by subclassing AnnotatedConfiguration and having fields annotated
- * with "@Setting"
+ * The base class for annotated configurations Annotated configurations are created by subclassing AnnotatedConfiguration and having fields annotated with "@Setting"
  */
 public abstract class AnnotatedSubclassConfiguration extends AnnotatedConfiguration {
 	private final Set<Field> fields = new HashSet<Field>();
@@ -54,7 +52,7 @@ public abstract class AnnotatedSubclassConfiguration extends AnnotatedConfigurat
 		return isConfigured;
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings ("unchecked")
 	private Set<Field> getFields() {
 		if (!fieldsCached) {
 			fields.addAll(ReflectionUtils.getDeclaredFieldsRecur(getClass(), Setting.class));
@@ -69,7 +67,7 @@ public abstract class AnnotatedSubclassConfiguration extends AnnotatedConfigurat
 			field.setAccessible(true);
 			String[] key = field.getAnnotation(Setting.class).value();
 			if (key.length == 0) {
-				key = new String[]{field.getName()};
+				key = new String[] {field.getName()};
 			}
 			ConfigurationNode node = source.getNode(key);
 			final Object value = node.getTypedValue(field.getGenericType());
@@ -92,7 +90,7 @@ public abstract class AnnotatedSubclassConfiguration extends AnnotatedConfigurat
 			field.setAccessible(true);
 			String[] key = field.getAnnotation(Setting.class).value();
 			if (key.length == 0) {
-				key = new String[]{field.getName()};
+				key = new String[] {field.getName()};
 			}
 			try {
 				source.getNode(key).setValue(field.getGenericType(), field.get(this));

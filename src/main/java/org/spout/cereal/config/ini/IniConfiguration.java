@@ -29,11 +29,7 @@ package org.spout.cereal.config.ini;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.lang.reflect.Array;
@@ -61,17 +57,11 @@ import org.spout.cereal.data.IOFactory;
 import static org.spout.cereal.config.commented.CommentedConfigurationNode.LINE_SEPARATOR;
 
 /**
- * This class handles reading and writing configuration nodes in the INI format.
- * Because the INI format is fairly loose, this class can read INI files written with a few formats.
- * However, when writing INI files the configuration's settings will override what was previously in the file
+ * This class handles reading and writing configuration nodes in the INI format. Because the INI format is fairly loose, this class can read INI files written with a few formats. However, when writing
+ * INI files the configuration's settings will override what was previously in the file
  *
- * The INI format also has a few limitations over other formats.
- * <ul>
- *     <li>Limited hierarchy: The format can only have one level of children (sections)</li>
- *     <li>Extremely basic datatype support: The configuration can split up lists, but otherwise all
- *     values are stored as strings. Maps are not supported.</li>
- *     <li>Saving files exactly as they were loaded is in some cases impossible. </li>
- * </ul>
+ * The INI format also has a few limitations over other formats. <ul> <li>Limited hierarchy: The format can only have one level of children (sections)</li> <li>Extremely basic datatype support: The
+ * configuration can split up lists, but otherwise all values are stored as strings. Maps are not supported.</li> <li>Saving files exactly as they were loaded is in some cases impossible. </li> </ul>
  *
  * An example INI file is as follows:
  * <pre>
@@ -96,7 +86,7 @@ import static org.spout.cereal.config.commented.CommentedConfigurationNode.LINE_
 public class IniConfiguration extends AbstractConfiguration implements CommentedConfiguration, FileConfiguration {
 	public static final char COMMENT_CHAR_SEMICOLON = ';';
 	public static final char COMMENT_CHAR_HASH = '#';
-	public static final Pattern COMMENT_REGEX = Pattern.compile("[" +COMMENT_CHAR_SEMICOLON + COMMENT_CHAR_HASH + "] ?(.*)");
+	public static final Pattern COMMENT_REGEX = Pattern.compile("[" + COMMENT_CHAR_SEMICOLON + COMMENT_CHAR_HASH + "] ?(.*)");
 	public static final Pattern SECTION_REGEX = Pattern.compile("\\[(.*)\\]");
 	private char preferredCommentChar = COMMENT_CHAR_HASH;
 	private final IOFactory factory;
@@ -195,7 +185,7 @@ public class IniConfiguration extends AbstractConfiguration implements Commented
 				writeNodeSection(writer, childlessNodes);
 			}
 
-			for (Iterator<ConfigurationNode> i = sectionNodes.iterator(); i.hasNext();) {
+			for (Iterator<ConfigurationNode> i = sectionNodes.iterator(); i.hasNext(); ) {
 				ConfigurationNode node = i.next();
 				String[] comment = getComment(node);
 				if (comment != null) {
@@ -261,8 +251,7 @@ public class IniConfiguration extends AbstractConfiguration implements Commented
 	}
 
 	/**
-	 * Writes a single section of nodes to the specified Writer
-	 * The nodes passed to this method must not have children
+	 * Writes a single section of nodes to the specified Writer The nodes passed to this method must not have children
 	 *
 	 * @param writer The Writer to write data to
 	 * @param nodes The nodes to write
@@ -288,8 +277,7 @@ public class IniConfiguration extends AbstractConfiguration implements Commented
 	}
 
 	/**
-	 * Returns the comment for a given configuration node, with a safe check to make sure
-	 * the node is a CommentedConfigurationNode
+	 * Returns the comment for a given configuration node, with a safe check to make sure the node is a CommentedConfigurationNode
 	 *
 	 * @param node The node to get a comment from
 	 * @return The node's comment, or null if no comment is present
@@ -323,7 +311,6 @@ public class IniConfiguration extends AbstractConfiguration implements Commented
 	/**
 	 * Returns the String representation of a configuration value for writing to the file
 	 *
-	 * @param value
 	 * @return string representation
 	 */
 	public String toStringValue(Object value) {

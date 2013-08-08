@@ -34,8 +34,8 @@ import java.lang.annotation.Target;
 /**
  * Annotation for fields that should be stored in an {@link AnnotatedConfiguration}
  */
-@Target(ElementType.FIELD)
-@Retention(RetentionPolicy.RUNTIME)
+@Target (ElementType.FIELD)
+@Retention (RetentionPolicy.RUNTIME)
 public @interface Setting {
 	public String[] value() default {};
 }

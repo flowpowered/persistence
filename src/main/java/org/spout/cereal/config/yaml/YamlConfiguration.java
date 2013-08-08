@@ -42,7 +42,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.spout.cereal.data.IOFactory;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
@@ -51,6 +50,7 @@ import org.yaml.snakeyaml.error.YAMLException;
 import org.spout.cereal.config.ConfigurationException;
 import org.spout.cereal.config.FileConfiguration;
 import org.spout.cereal.config.MapBasedConfiguration;
+import org.spout.cereal.data.IOFactory;
 
 /**
  * A configuration that loads from a YAML file

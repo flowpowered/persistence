@@ -34,6 +34,7 @@ import org.spout.cereal.config.ConfigurationNode;
  */
 public class CommentedConfigurationNode extends ConfigurationNode {
 	public static final String LINE_SEPARATOR;
+
 	static {
 		String sep = System.getProperty("line.separator");
 		if (sep == null) {
@@ -41,6 +42,7 @@ public class CommentedConfigurationNode extends ConfigurationNode {
 		}
 		LINE_SEPARATOR = sep;
 	}
+
 	private String[] comment;
 
 	public CommentedConfigurationNode(Configuration config, String[] path, Object value) {
@@ -48,8 +50,8 @@ public class CommentedConfigurationNode extends ConfigurationNode {
 	}
 
 	/**
-	 * Returns the comment lines attached to this configuration node
-	 * Will return null if this node doesn't have a comment
+	 * Returns the comment lines attached to this configuration node Will return null if this node doesn't have a comment
+	 *
 	 * @return The comment for this node
 	 */
 	public String[] getComment() {
@@ -57,8 +59,7 @@ public class CommentedConfigurationNode extends ConfigurationNode {
 	}
 
 	/**
-	 * Sets the comment that is attached to this configuration node.
-	 * In this method the comment is provided as one line, containing the line separator character
+	 * Sets the comment that is attached to this configuration node. In this method the comment is provided as one line, containing the line separator character
 	 *
 	 * @param comment The comment to set
 	 */

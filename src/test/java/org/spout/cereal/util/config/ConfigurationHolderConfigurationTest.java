@@ -34,7 +34,7 @@ import org.spout.cereal.config.ConfigurationHolder;
 import org.spout.cereal.config.ConfigurationHolderConfiguration;
 import org.spout.cereal.config.MapConfiguration;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ConfigurationHolderConfigurationTest {
 	private static class TestConfig extends ConfigurationHolderConfiguration {

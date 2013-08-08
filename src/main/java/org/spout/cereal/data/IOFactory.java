@@ -26,7 +26,6 @@
  */
 package org.spout.cereal.data;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -45,7 +44,9 @@ import java.nio.charset.Charset;
  */
 public interface IOFactory {
 	public static final Charset UTF_8_CHARSET = Charset.forName("UTF-8");
+
 	public Reader createReader() throws IOException;
+
 	public Writer createWriter() throws IOException;
 
 	/**
@@ -105,8 +106,7 @@ public interface IOFactory {
 		private final OutputStream output;
 
 		/**
-		 * An IO factory that creates Readers from existing streams.
-		 * Either of the parameters may be null, but not both.
+		 * An IO factory that creates Readers from existing streams. Either of the parameters may be null, but not both.
 		 *
 		 * @param input The input stream
 		 * @param output The output stream.

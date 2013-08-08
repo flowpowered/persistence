@@ -31,8 +31,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.spout.cereal.config.Configuration;
 
 /**
- * This implementation of MigrationAction converts configuration keys based on predefined
- * stringpath patterns where % is replaced by the old key. The stringpath pattern is split by the configuration's path separator
+ * This implementation of MigrationAction converts configuration keys based on predefined stringpath patterns where % is replaced by the old key. The stringpath pattern is split by the configuration's
+ * path separator
  *
  * @see org.spout.cereal.config.Configuration#getPathSeparator()
  */

@@ -31,6 +31,7 @@ import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
+
 import org.spout.cereal.config.ConfigurationException;
 import org.spout.cereal.config.ConfigurationNode;
 import org.spout.cereal.config.MapConfiguration;
@@ -97,7 +98,6 @@ public class ConfigurationTest {
 		assertEquals(TEST_VALUE, node.getString());
 		assertEquals(node, config.getNode(TEST_PATH));
 		assertEquals(TEST_VALUE, config.getNode(TEST_PATH).getString());
-
 	}
 
 	@Test
