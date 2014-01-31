@@ -25,6 +25,8 @@ package com.flowpowered.cerealization.config;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -126,12 +128,41 @@ public class ConfigurationNode extends AbstractConfigurationNodeSource implement
 	}
 
 	@Override
+	public BigInteger getBigInt() {
+		return valueHolder.getBigInt();
+	}
+
+	@Override
+	public BigInteger getBigInt(BigInteger def) {
+		return valueHolder.getBigInt(def);
+	}
+
+	@Override
+	public BigDecimal getDecimal() {
+		return valueHolder.getDecimal();
+	}
+
+	@Override
+	public BigDecimal getDecimal(BigDecimal def) {
+		return valueHolder.getDecimal(def);
+	}
+
+	@Override
 	public Date getDate() {
 		return valueHolder.getDate();
 	}
 
 	public Date getDate(Date def) {
 		return valueHolder.getDate(def);
+	}
+
+	@Override
+	public byte[] getBytes() {
+		return valueHolder.getBytes();
+	}
+
+	public byte[] getBytes(byte[] def) {
+		return valueHolder.getBytes(def);
 	}
 
 	@Override

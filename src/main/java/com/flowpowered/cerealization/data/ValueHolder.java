@@ -24,6 +24,8 @@
 package com.flowpowered.cerealization.data;
 
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -155,6 +157,42 @@ public interface ValueHolder {
 	public double getDouble(double def);
 
 	/**
+	 * Return this node's value as a BigInteger
+	 *
+	 * @return the BigInteger value
+	 * @see #getBigInt(BigInteger)
+	 * @see #getValue()
+	 */
+	public BigInteger getBigInt();
+
+	/**
+	 * Return this node's value as a BigInteger
+	 *
+	 * @param def The default value, returned if this node doesn't have a set value or the value isn't a BigInteger
+	 * @return the BigInteger value
+	 * @see #getValue()
+	 */
+	public BigInteger getBigInt(BigInteger def);
+
+	/**
+	 * Return this node's value as a BigDecimal
+	 *
+	 * @return the BigDecimal value
+	 * @see #getDecimal(BigDecimal)
+	 * @see #getValue()
+	 */
+	public BigDecimal getDecimal();
+
+	/**
+	 * Return this node's value as a BigDecimal
+	 *
+	 * @param def The default value, returned if this node doesn't have a set value or the value isn't a BigDecimal
+	 * @return the BigDecimal value
+	 * @see #getValue()
+	 */
+	public BigDecimal getDecimal(BigDecimal def);
+
+	/**
 	 * Return this node's value as a Date
 	 *
 	 * @return the Date value
@@ -189,6 +227,24 @@ public interface ValueHolder {
 	 * @see #getValue(Object)
 	 */
 	public String getString(String def);
+
+	/**
+	 * Return this node's value as a byte array
+	 *
+	 * @return the byte array value
+	 * @see #getBytes(byte[])
+	 * @see #getValue()
+	 */
+	public byte[] getBytes();
+
+	/**
+	 * Return this node's value as a byte array
+	 *
+	 * @param def The default value, returned if this node doesn't have a set value
+	 * @return the byte array value
+	 * @see #getValue()
+	 */
+	public byte[] getBytes(byte[] def);
 
 	/**
 	 * Return this node's value

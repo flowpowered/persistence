@@ -24,6 +24,8 @@
 package com.flowpowered.cerealization.data;
 
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -122,6 +124,28 @@ public class ValueHolderBase implements ValueHolder {
 	}
 
 	@Override
+	public BigInteger getBigInt() {
+		return getBigInt(null);
+	}
+
+	@Override
+	public BigInteger getBigInt(BigInteger def) {
+		final BigInteger val = CastUtils.castBigInt(getValue(def));
+		return val == null ? def : val;
+	}
+
+	@Override
+	public BigDecimal getDecimal() {
+		return getDecimal(null);
+	}
+
+	@Override
+	public BigDecimal getDecimal(BigDecimal def) {
+		final BigDecimal val = CastUtils.castBigDecimal(getValue(def));
+		return val == null ? def : val;
+	}
+
+	@Override
 	public Date getDate() {
 		return getDate(null);
 	}
@@ -130,6 +154,21 @@ public class ValueHolderBase implements ValueHolder {
 	public Date getDate(Date def) {
 		final Date val = CastUtils.castDate(getValue(def));
 		return val == null ? def : val;
+	}
+
+	@Override
+	public byte[] getBytes() {
+		return getBytes(null);
+	}
+
+	@Override
+	public byte[] getBytes(byte[] def) {
+		final Object val = getValue(def);
+		if (val == null) {
+			return def;
+		}
+		final byte[] bytes = CastUtils.castBytes(val);
+		return bytes == null ? val.toString().getBytes() : bytes;
 	}
 
 	@Override

@@ -39,6 +39,7 @@ public class Serialization {
 					new NumberSerializer(),
 					new EnumSerializer(),
 					new DateSerializer(),
+					new ByteArraySerializer(),
 					new ConfigurationBaseSerializer(),
 					new SetSerializer(),
 					new ListSerializer(),

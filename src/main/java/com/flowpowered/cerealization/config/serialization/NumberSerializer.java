@@ -23,6 +23,11 @@
  */
 package com.flowpowered.cerealization.config.serialization;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
+import com.flowpowered.cerealization.CastUtils;
+
 public class NumberSerializer extends Serializer {
 	@Override
 	public boolean isApplicable(GenericType type) {
@@ -76,6 +81,20 @@ public class NumberSerializer extends Serializer {
 				return ((Number) rawVal).shortValue();
 			} else {
 				return Short.parseShort(String.valueOf(rawVal));
+			}
+		} else if (target.equals(BigInteger.class)) {
+			final BigInteger val = CastUtils.castBigInt(rawVal);
+			if (val != null) {
+				return val;
+			} else {
+				return new BigInteger(String.valueOf(rawVal));
+			}
+		} else if (target.equals(BigDecimal.class)) {
+			final BigDecimal val = CastUtils.castBigDecimal(rawVal);
+			if (val != null) {
+				return val;
+			} else {
+				return new BigDecimal(String.valueOf(rawVal));
 			}
 		}
 		return null;

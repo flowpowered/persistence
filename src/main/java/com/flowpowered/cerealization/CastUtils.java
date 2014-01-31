@@ -23,6 +23,8 @@
  */
 package com.flowpowered.cerealization;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
@@ -167,6 +169,56 @@ public class CastUtils {
 	}
 
 	/**
+	 * Casts a value to a BigInteger. May return null.
+	 *
+	 * @param o The object to attempt to cast
+	 * @return The object as a BigInteger
+	 */
+	public static BigInteger castBigInt(Object o) {
+		if (o == null) {
+			return null;
+		}
+
+		if (o instanceof BigInteger) {
+			return (BigInteger) o;
+		}
+
+		if (o instanceof Number) {
+			return BigInteger.valueOf(((Number) o).longValue());
+		}
+		try {
+			return new BigInteger(o.toString());
+		} catch (NumberFormatException e) {
+			return null;
+		}
+	}
+
+	/**
+	 * Casts a value to a BigDecimal. May return null.
+	 *
+	 * @param o The object to attempt to cast
+	 * @return The object as a BigDecimal
+	 */
+	public static BigDecimal castBigDecimal(Object o) {
+		if (o == null) {
+			return null;
+		}
+
+		if (o instanceof BigDecimal) {
+			return (BigDecimal) o;
+		}
+
+		if (o instanceof Number) {
+			return BigDecimal.valueOf(((Number) o).doubleValue());
+		}
+		try {
+			return new BigDecimal(o.toString());
+		} catch (NumberFormatException e) {
+			return null;
+		}
+	}
+
+	/**
 	 * Casts a value to a boolean. May return null.
 	 *
 	 * @param o The object to attempt to cast
@@ -190,6 +242,12 @@ public class CastUtils {
 		return null;
 	}
 
+	/**
+	 * Casts a value to a Date. May return null.
+	 *
+	 * @param o The object to attempt to cast
+	 * @return The object as a Date
+	 */
 	public static Date castDate(Object o) {
 		if (o == null) {
 			return null;
@@ -217,6 +275,22 @@ public class CastUtils {
 		try {
 			return DateFormat.getInstance().parse(str);
 		} catch (ParseException e) {
+		}
+		return null;
+	}
+
+	/**
+	 * Casts a value to a byte array. May return null.
+	 *
+	 * @param o The object to attempt to cast
+	 * @return The object as a byte array
+	 */
+	public static byte[] castBytes(Object o) {
+		if (o == null) {
+			return null;
+		}
+		if (o instanceof byte[]) {
+			return (byte[]) o;
 		}
 		return null;
 	}
