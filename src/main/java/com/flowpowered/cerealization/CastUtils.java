@@ -23,6 +23,10 @@
  */
 package com.flowpowered.cerealization;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Date;
+
 /**
  * Class containing generic casting functions.
  */
@@ -183,6 +187,37 @@ public class CastUtils {
 			}
 		}
 
+		return null;
+	}
+
+	public static Date castDate(Object o) {
+		if (o == null) {
+			return null;
+		}
+		if (o instanceof Date) {
+			return (Date) o;
+		}
+		Long l = castLong(o);
+		if (l != null) {
+			return new Date(l);
+		}
+		String str = String.valueOf(o);
+		try {
+			return DateFormat.getDateTimeInstance().parse(str);
+		} catch (ParseException e) {
+		}
+		try {
+			return DateFormat.getDateInstance().parse(str);
+		} catch (ParseException e) {
+		}
+		try {
+			return DateFormat.getTimeInstance().parse(str);
+		} catch (ParseException e) {
+		}
+		try {
+			return DateFormat.getInstance().parse(str);
+		} catch (ParseException e) {
+		}
 		return null;
 	}
 }

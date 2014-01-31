@@ -25,6 +25,7 @@ package com.flowpowered.cerealization.config;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -122,6 +123,15 @@ public class ConfigurationNode extends AbstractConfigurationNodeSource implement
 	@Override
 	public double getDouble(double def) {
 		return valueHolder.getDouble(def);
+	}
+
+	@Override
+	public Date getDate() {
+		return valueHolder.getDate();
+	}
+
+	public Date getDate(Date def) {
+		return valueHolder.getDate(def);
 	}
 
 	@Override

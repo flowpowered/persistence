@@ -27,6 +27,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import com.flowpowered.cerealization.CastUtils;
@@ -117,6 +118,17 @@ public class ValueHolderBase implements ValueHolder {
 	@Override
 	public double getDouble(double def) {
 		final Double val = CastUtils.castDouble(getValue(def));
+		return val == null ? def : val;
+	}
+
+	@Override
+	public Date getDate() {
+		return getDate(null);
+	}
+
+	@Override
+	public Date getDate(Date def) {
+		final Date val = CastUtils.castDate(getValue(def));
 		return val == null ? def : val;
 	}
 

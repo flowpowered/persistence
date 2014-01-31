@@ -24,6 +24,7 @@
 package com.flowpowered.cerealization.data;
 
 import java.lang.reflect.Type;
+import java.util.Date;
 import java.util.List;
 
 public interface ValueHolder {
@@ -152,6 +153,24 @@ public interface ValueHolder {
 	 * @see #getValue(Object)
 	 */
 	public double getDouble(double def);
+
+	/**
+	 * Return this node's value as a Date
+	 *
+	 * @return the Date value
+	 * @see #getDate(Date)
+	 * @see #getValue(Object)
+	 */
+	public Date getDate();
+
+	/**
+	 * Return this node's value as a Date
+	 *
+	 * @param def The default value, returned if this node doesn't have a set value or the value isn't a Date
+	 * @return the Date value
+	 * @see #getValue(Object)
+	 */
+	public Date getDate(Date def);
 
 	/**
 	 * Return this node's value as a String
