@@ -1,23 +1,29 @@
-# Source language and JDK version to use.
+# Source language and JDK version to use
 language: java
 jdk: oraclejdk7
 
-# Compile and package JAR and set build properties.
+# Compile and package JAR and set build properties
 install: mvn package -DbuildNumber=$TRAVIS_BUILD_NUMBER -DciSystem=travis -Dcommit=${TRAVIS_COMMIT:0:7}
-after_success:
-  # Get files for use with build, namely the custom Maven settings.xml.
-  - "git clone https://github.com/SpoutDev/travis-ci-resources.git target/travis"
-  # Check if commit s not a pull request, if git repo is official, and if branch is master. If checks pass, deploy artifacts to Maven repository.
-  - "[[ $TRAVIS_PULL_REQUEST == false ]] && [[ $TRAVIS_REPO_SLUG == SpoutDev/Cerealization ]] && [[ $TRAVIS_BRANCH == master ]] && mvn deploy --settings target/travis/settings.xml"
 
+# Perform steps after compilation/test success
+after_success:
+  # Get files for use with build, namely the custom Maven settings.xml
+  - "git clone https://github.com/flow/travis-ci-resources.git target/travis"
+  # Check if commit is not a pull request, if repo is official, and branch is master, generate and deploy artifacts and reports
+  - "[[ $TRAVIS_PULL_REQUEST == false ]] && [[ $TRAVIS_REPO_SLUG == flow/flow-cerealization ]] && [[ $TRAVIS_BRANCH == master ]] && mvn javadoc:jar source:jar cobertura:cobertura coveralls:cobertura -DserviceJobId=$TRAVIS_JOB_ID deploy --settings target/travis/settings.xml"
+
+# Notification services
 notifications:
-  # Disable build status email notifications, until the issue with forks is fixed.
+  # Disable build status email notifications, until the issue with forks is fixed
   email: false
   webhooks:
     # Send build information and status to Notifico.
-    - http://n.tkte.ch/h/1076/r5Wwubvw4r_SABhQgwfeL8WO
+    - http://n.tkte.ch/h/2038/s1-vgwQBXo6CiTpkjY8K2Rz_
 
+# Environmental system variables
 env:
   global:
-    - secure: "Qd8wvxWJ4pK+JAZg6+iIH4uqN2DGVGc+tyLDJX3gJ/q4ES59cnzMOfgAXxIy1W/DIbjwqPp5BiO8JUjKDN8WIkq/zS4PokwebQaBIcHHx2ibNHHNcXl3B6eddC10ew5tDZZxYY628zqa/ABDJYOwCIVUEAQY8XRGdqtgVkR3CTw="
-    - secure: "auZwWXS8kMGQ5tYQPNNTZgf8ztMKLgKz+DznP+Yp/uMAlSqZxMvcuz5AtxVzpsDC5cYazUXBPVguK4Pqby+kLHQYv0+dSTT+zYEK97n5VL/ZYpn6krrEsfPuilBacAnTBWOL5bhgNYTtKE2MgaO0ZnM3dNf4nZ+6idd2g4Iz8JY="
+    # Make the log output cleaner
+    - TERM=dumb
+    # Super secure, encrypted variables! Ssssh!
+    - 
