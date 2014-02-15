@@ -35,7 +35,7 @@ import java.util.List;
 import com.flowpowered.cerealization.CastUtils;
 import com.flowpowered.cerealization.config.serialization.Serialization;
 
-public class ValueHolderBase implements ValueHolder {
+public class ValueHolderBase extends AbstractValueHolder {
 	private final ValueHolder actualValue;
 
 	public ValueHolderBase() {
@@ -47,19 +47,9 @@ public class ValueHolderBase implements ValueHolder {
 	}
 
 	@Override
-	public boolean getBoolean() {
-		return getBoolean(false);
-	}
-
-	@Override
 	public boolean getBoolean(boolean def) {
 		final Boolean val = CastUtils.castBoolean(getValue(def));
 		return val == null ? def : val;
-	}
-
-	@Override
-	public byte getByte() {
-		return getByte((byte) 0);
 	}
 
 	@Override
@@ -69,19 +59,9 @@ public class ValueHolderBase implements ValueHolder {
 	}
 
 	@Override
-	public float getFloat() {
-		return getFloat(0f);
-	}
-
-	@Override
 	public float getFloat(float def) {
 		final Float val = CastUtils.castFloat(getValue(def));
 		return val == null ? def : val;
-	}
-
-	@Override
-	public short getShort() {
-		return getShort((short) 0);
 	}
 
 	@Override
@@ -91,19 +71,9 @@ public class ValueHolderBase implements ValueHolder {
 	}
 
 	@Override
-	public int getInt() {
-		return getInt(0);
-	}
-
-	@Override
 	public int getInt(int def) {
 		final Integer val = CastUtils.castInt(getValue(def));
 		return val == null ? def : val;
-	}
-
-	@Override
-	public long getLong() {
-		return getLong(0);
 	}
 
 	@Override
@@ -113,19 +83,9 @@ public class ValueHolderBase implements ValueHolder {
 	}
 
 	@Override
-	public double getDouble() {
-		return getDouble(0);
-	}
-
-	@Override
 	public double getDouble(double def) {
 		final Double val = CastUtils.castDouble(getValue(def));
 		return val == null ? def : val;
-	}
-
-	@Override
-	public BigInteger getBigInt() {
-		return getBigInt(null);
 	}
 
 	@Override
@@ -135,30 +95,15 @@ public class ValueHolderBase implements ValueHolder {
 	}
 
 	@Override
-	public BigDecimal getDecimal() {
-		return getDecimal(null);
-	}
-
-	@Override
 	public BigDecimal getDecimal(BigDecimal def) {
 		final BigDecimal val = CastUtils.castBigDecimal(getValue(def));
 		return val == null ? def : val;
 	}
 
 	@Override
-	public Date getDate() {
-		return getDate(null);
-	}
-
-	@Override
 	public Date getDate(Date def) {
 		final Date val = CastUtils.castDate(getValue(def));
 		return val == null ? def : val;
-	}
-
-	@Override
-	public byte[] getBytes() {
-		return getBytes(null);
 	}
 
 	@Override
@@ -172,11 +117,6 @@ public class ValueHolderBase implements ValueHolder {
 	}
 
 	@Override
-	public String getString() {
-		return getString(null);
-	}
-
-	@Override
 	public String getString(String def) {
 		final Object val = getValue(def);
 		return val == null ? def : val.toString();
@@ -184,23 +124,18 @@ public class ValueHolderBase implements ValueHolder {
 
 	@Override
 	public Object getValue() {
-		if (actualValue == null) {
+		if (this.actualValue == null) {
 			throw new UnsupportedOperationException("ValueHolderBase must have a reference to another ValueHolder or override getValue");
 		}
-		return actualValue.getValue();
+		return this.actualValue.getValue();
 	}
 
 	@Override
 	public Object getValue(Object def) {
-		if (actualValue == null) {
+		if (this.actualValue == null) {
 			throw new UnsupportedOperationException("ValueHolderBase must have a reference to another ValueHolder or override getValue");
 		}
-		return actualValue.getValue(def);
-	}
-
-	@Override
-	public <T> T getTypedValue(Class<T> type) {
-		return getTypedValue(type, null);
+		return this.actualValue.getValue(def);
 	}
 
 	@Override
@@ -210,22 +145,12 @@ public class ValueHolderBase implements ValueHolder {
 	}
 
 	@Override
-	public Object getTypedValue(Type type) {
-		return getTypedValue(type, null);
-	}
-
-	@Override
 	public Object getTypedValue(Type type, Object def) {
 		Object val = Serialization.deserialize(type, getValue());
 		if (val == null) {
 			val = def;
 		}
 		return val;
-	}
-
-	@Override
-	public List<?> getList() {
-		return getList(null);
 	}
 
 	@Override
@@ -241,13 +166,8 @@ public class ValueHolderBase implements ValueHolder {
 	}
 
 	@Override
-	public List<String> getStringList() {
-		return getStringList(null);
-	}
-
-	@Override
 	public List<String> getStringList(List<String> def) {
-		List<?> val = getList(def);
+		List<?> val = this.actualValue.getList(def);
 		List<String> ret = new ArrayList<String>();
 		for (Object item : val) {
 			ret.add(item == null ? null : item.toString());
@@ -256,13 +176,8 @@ public class ValueHolderBase implements ValueHolder {
 	}
 
 	@Override
-	public List<Integer> getIntegerList() {
-		return getIntegerList(null);
-	}
-
-	@Override
 	public List<Integer> getIntegerList(List<Integer> def) {
-		List<?> val = getList(def);
+		List<?> val = this.actualValue.getList(def);
 		List<Integer> ret = new ArrayList<Integer>();
 		for (Object item : val) {
 			Integer asInt = CastUtils.castInt(item);
@@ -275,13 +190,8 @@ public class ValueHolderBase implements ValueHolder {
 	}
 
 	@Override
-	public List<Double> getDoubleList() {
-		return getDoubleList(null);
-	}
-
-	@Override
 	public List<Double> getDoubleList(List<Double> def) {
-		List<?> val = getList(def);
+		List<?> val = this.actualValue.getList(def);
 		List<Double> ret = new ArrayList<Double>();
 		for (Object item : val) {
 			Double asDouble = CastUtils.castDouble(item);
@@ -294,13 +204,8 @@ public class ValueHolderBase implements ValueHolder {
 	}
 
 	@Override
-	public List<Boolean> getBooleanList() {
-		return getBooleanList(null);
-	}
-
-	@Override
 	public List<Boolean> getBooleanList(List<Boolean> def) {
-		List<?> val = getList(def);
+		List<?> val = this.actualValue.getList(def);
 		List<Boolean> ret = new ArrayList<Boolean>();
 		for (Object item : val) {
 			Boolean asBoolean = CastUtils.castBoolean(item);

@@ -21,36 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.flowpowered.cerealization.config;
+package com.flowpowered.cerealization.newconfig;
 
-/**
- * Configuration exception.
- */
-public class ConfigurationException extends Exception {
-	private static final long serialVersionUID = 0L;
-	private final String path;
+public interface Configuration extends com.flowpowered.cerealization.config.Configuration {
+	boolean isCaseSensitive();
 
-	public ConfigurationException(String msg, String path) {
-		super(msg + " at node: " + path);
-		this.path = path;
-	}
-
-	public ConfigurationException() {
-		super();
-		this.path = null;
-	}
-
-	public ConfigurationException(String msg) {
-		super(msg);
-		this.path = null;
-	}
-
-	public ConfigurationException(Throwable cause) {
-		super(cause);
-		this.path = null;
-	}
-
-	public String getPath() {
-		return this.path;
-	}
 }
