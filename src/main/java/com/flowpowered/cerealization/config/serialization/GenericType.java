@@ -32,65 +32,65 @@ import java.lang.reflect.WildcardType;
  * A wrapper around {@link Type} to allow easier access to parameterized types.
  */
 public class GenericType {
-	private final Class<?> mainType;
-	private final GenericType[] neededGenerics;
-	private final GenericType arrayType;
-	private final Type rawType;
+    private final Class<?> mainType;
+    private final GenericType[] neededGenerics;
+    private final GenericType arrayType;
+    private final Type rawType;
 
-	public GenericType(Type rawType) {
-		if (rawType instanceof ParameterizedType) {
-			ParameterizedType type = (ParameterizedType) rawType;
-			mainType = getMainType(type.getRawType());
-			neededGenerics = toGenericType(type.getActualTypeArguments());
-			arrayType = null;
-		} else if (rawType instanceof GenericArrayType) {
-			GenericArrayType type = (GenericArrayType) rawType;
-			mainType = null;
-			neededGenerics = new GenericType[0];
-			arrayType = new GenericType(type.getGenericComponentType());
-		} else {
-			mainType = getMainType(rawType);
-			neededGenerics = new GenericType[0];
-			arrayType = null;
-		}
-		this.rawType = rawType;
-	}
+    public GenericType(Type rawType) {
+        if (rawType instanceof ParameterizedType) {
+            ParameterizedType type = (ParameterizedType) rawType;
+            mainType = getMainType(type.getRawType());
+            neededGenerics = toGenericType(type.getActualTypeArguments());
+            arrayType = null;
+        } else if (rawType instanceof GenericArrayType) {
+            GenericArrayType type = (GenericArrayType) rawType;
+            mainType = null;
+            neededGenerics = new GenericType[0];
+            arrayType = new GenericType(type.getGenericComponentType());
+        } else {
+            mainType = getMainType(rawType);
+            neededGenerics = new GenericType[0];
+            arrayType = null;
+        }
+        this.rawType = rawType;
+    }
 
-	public Class<?> getMainType() {
-		return mainType;
-	}
+    public Class<?> getMainType() {
+        return mainType;
+    }
 
-	public GenericType[] getGenerics() {
-		return neededGenerics;
-	}
+    public GenericType[] getGenerics() {
+        return neededGenerics;
+    }
 
-	public Type getRawType() {
-		return rawType;
-	}
+    public Type getRawType() {
+        return rawType;
+    }
 
-	public boolean isArray() {
-		return arrayType != null;
-	}
+    public boolean isArray() {
+        return arrayType != null;
+    }
 
-	public GenericType getArrayType() {
-		return arrayType;
-	}
+    public GenericType getArrayType() {
+        return arrayType;
+    }
 
-	private static Class<?> getMainType(Type type) {
-		if (type instanceof Class) {
-			return (Class<?>) type;
-		} else if (type instanceof WildcardType) {
-			return (Class<?>) ((WildcardType) type).getUpperBounds()[0];
-		} else {
-			throw new IllegalArgumentException("Unknown main class type: " + type.getClass());
-		}
-	}
+    private static Class<?> getMainType(Type type) {
+        if (type instanceof Class) {
+            return (Class<?>) type;
+        } else if (type instanceof WildcardType) {
+            return (Class<?>) ((WildcardType) type).getUpperBounds()[0];
+        } else {
+            throw new IllegalArgumentException("Unknown main class type: " + type.getClass());
+        }
+    }
 
-	public static GenericType[] toGenericType(Type[] types) {
-		GenericType[] genericTypes = new GenericType[types.length];
-		for (int i = 0; i < types.length; ++i) {
-			genericTypes[i] = new GenericType(types[i]);
-		}
-		return genericTypes;
-	}
+    public static GenericType[] toGenericType(Type[] types) {
+        GenericType[] genericTypes = new GenericType[types.length];
+        for (int i = 0; i < types.length; ++i) {
+            genericTypes[i] = new GenericType(types[i]);
+        }
+        return genericTypes;
+    }
 }

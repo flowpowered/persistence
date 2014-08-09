@@ -29,74 +29,74 @@ import java.math.BigInteger;
 import com.flowpowered.cerealization.CastUtils;
 
 public class NumberSerializer extends Serializer {
-	@Override
-	public boolean isApplicable(GenericType type) {
-		Class<?> target = type.getMainType();
-		return target != null && (target.isPrimitive() || Number.class.isAssignableFrom(target)) && !boolean.class.isAssignableFrom(target);
-	}
+    @Override
+    public boolean isApplicable(GenericType type) {
+        Class<?> target = type.getMainType();
+        return target != null && (target.isPrimitive() || Number.class.isAssignableFrom(target)) && !boolean.class.isAssignableFrom(target);
+    }
 
-	@Override
-	public int getParametersRequired() {
-		return 0;
-	}
+    @Override
+    public int getParametersRequired() {
+        return 0;
+    }
 
-	@Override
-	protected Object handleDeserialize(GenericType type, Object rawVal) {
-		Class<?> target = type.getMainType();
-		// Wrapper classes are evil!
-		if (target.equals(Number.class) && rawVal instanceof Number) {
-			return rawVal;
-		} else if (target.equals(int.class) || target.equals(Integer.class)) {
-			if (rawVal instanceof Number) {
-				return ((Number) rawVal).intValue();
-			} else {
-				return Integer.parseInt(String.valueOf(rawVal));
-			}
-		} else if (target.equals(byte.class) || target.equals(Byte.class)) {
-			if (rawVal instanceof Number) {
-				return ((Number) rawVal).byteValue();
-			} else {
-				return Byte.parseByte(String.valueOf(rawVal));
-			}
-		} else if (target.equals(long.class) || target.equals(Long.class)) {
-			if (rawVal instanceof Number) {
-				return ((Number) rawVal).longValue();
-			} else {
-				return Long.parseLong(String.valueOf(rawVal));
-			}
-		} else if (target.equals(double.class) || target.equals(Double.class)) {
-			if (rawVal instanceof Number) {
-				return ((Number) rawVal).doubleValue();
-			} else {
-				return Double.parseDouble(String.valueOf(rawVal));
-			}
-		} else if (target.equals(float.class) || target.equals(Float.class)) {
-			if (rawVal instanceof Number) {
-				return ((Number) rawVal).floatValue();
-			} else {
-				return Float.parseFloat(String.valueOf(rawVal));
-			}
-		} else if (target.equals(short.class) || target.equals(Short.class)) {
-			if (rawVal instanceof Number) {
-				return ((Number) rawVal).shortValue();
-			} else {
-				return Short.parseShort(String.valueOf(rawVal));
-			}
-		} else if (target.equals(BigInteger.class)) {
-			final BigInteger val = CastUtils.castBigInt(rawVal);
-			if (val != null) {
-				return val;
-			} else {
-				return new BigInteger(String.valueOf(rawVal));
-			}
-		} else if (target.equals(BigDecimal.class)) {
-			final BigDecimal val = CastUtils.castBigDecimal(rawVal);
-			if (val != null) {
-				return val;
-			} else {
-				return new BigDecimal(String.valueOf(rawVal));
-			}
-		}
-		return null;
-	}
+    @Override
+    protected Object handleDeserialize(GenericType type, Object rawVal) {
+        Class<?> target = type.getMainType();
+        // Wrapper classes are evil!
+        if (target.equals(Number.class) && rawVal instanceof Number) {
+            return rawVal;
+        } else if (target.equals(int.class) || target.equals(Integer.class)) {
+            if (rawVal instanceof Number) {
+                return ((Number) rawVal).intValue();
+            } else {
+                return Integer.parseInt(String.valueOf(rawVal));
+            }
+        } else if (target.equals(byte.class) || target.equals(Byte.class)) {
+            if (rawVal instanceof Number) {
+                return ((Number) rawVal).byteValue();
+            } else {
+                return Byte.parseByte(String.valueOf(rawVal));
+            }
+        } else if (target.equals(long.class) || target.equals(Long.class)) {
+            if (rawVal instanceof Number) {
+                return ((Number) rawVal).longValue();
+            } else {
+                return Long.parseLong(String.valueOf(rawVal));
+            }
+        } else if (target.equals(double.class) || target.equals(Double.class)) {
+            if (rawVal instanceof Number) {
+                return ((Number) rawVal).doubleValue();
+            } else {
+                return Double.parseDouble(String.valueOf(rawVal));
+            }
+        } else if (target.equals(float.class) || target.equals(Float.class)) {
+            if (rawVal instanceof Number) {
+                return ((Number) rawVal).floatValue();
+            } else {
+                return Float.parseFloat(String.valueOf(rawVal));
+            }
+        } else if (target.equals(short.class) || target.equals(Short.class)) {
+            if (rawVal instanceof Number) {
+                return ((Number) rawVal).shortValue();
+            } else {
+                return Short.parseShort(String.valueOf(rawVal));
+            }
+        } else if (target.equals(BigInteger.class)) {
+            final BigInteger val = CastUtils.castBigInt(rawVal);
+            if (val != null) {
+                return val;
+            } else {
+                return new BigInteger(String.valueOf(rawVal));
+            }
+        } else if (target.equals(BigDecimal.class)) {
+            final BigDecimal val = CastUtils.castBigDecimal(rawVal);
+            if (val != null) {
+                return val;
+            } else {
+                return new BigDecimal(String.valueOf(rawVal));
+            }
+        }
+        return null;
+    }
 }

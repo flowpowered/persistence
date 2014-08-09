@@ -30,53 +30,53 @@ import com.flowpowered.cerealization.config.ConfigurationNode;
  * A ConfigurationNode type that also stores comments. These normally exist in {@link CommentedConfiguration}s.
  */
 public class CommentedConfigurationNode extends ConfigurationNode {
-	public static final String LINE_SEPARATOR;
+    public static final String LINE_SEPARATOR;
 
-	static {
-		String sep = System.getProperty("line.separator");
-		if (sep == null) {
-			sep = "\n";
-		}
-		LINE_SEPARATOR = sep;
-	}
+    static {
+        String sep = System.getProperty("line.separator");
+        if (sep == null) {
+            sep = "\n";
+        }
+        LINE_SEPARATOR = sep;
+    }
 
-	private String[] comment;
+    private String[] comment;
 
-	public CommentedConfigurationNode(Configuration config, String[] path, Object value) {
-		super(config, path, value);
-	}
+    public CommentedConfigurationNode(Configuration config, String[] path, Object value) {
+        super(config, path, value);
+    }
 
-	/**
-	 * Returns the comment lines attached to this configuration node Will return null if this node doesn't have a comment
-	 *
-	 * @return The comment for this node
-	 */
-	public String[] getComment() {
-		return comment;
-	}
+    /**
+     * Returns the comment lines attached to this configuration node Will return null if this node doesn't have a comment
+     *
+     * @return The comment for this node
+     */
+    public String[] getComment() {
+        return comment;
+    }
 
-	/**
-	 * Sets the comment that is attached to this configuration node. In this method the comment is provided as one line, containing the line separator character
-	 *
-	 * @param comment The comment to set
-	 */
-	public void setComment(String comment) {
-		checkAdded();
-		this.comment = comment.split(LINE_SEPARATOR);
-	}
+    /**
+     * Sets the comment that is attached to this configuration node. In this method the comment is provided as one line, containing the line separator character
+     *
+     * @param comment The comment to set
+     */
+    public void setComment(String comment) {
+        checkAdded();
+        this.comment = comment.split(LINE_SEPARATOR);
+    }
 
-	/**
-	 * Sets the comment of the configuration, already split by line
-	 *
-	 * @param comment The comment lines
-	 */
-	public void setComment(String... comment) {
-		checkAdded();
-		this.comment = comment;
-	}
+    /**
+     * Sets the comment of the configuration, already split by line
+     *
+     * @param comment The comment lines
+     */
+    public void setComment(String... comment) {
+        checkAdded();
+        this.comment = comment;
+    }
 
-	@Override
-	public CommentedConfigurationNode createConfigurationNode(String[] path, Object value) {
-		return new CommentedConfigurationNode(getConfiguration(), path, value);
-	}
+    @Override
+    public CommentedConfigurationNode createConfigurationNode(String[] path, Object value) {
+        return new CommentedConfigurationNode(getConfiguration(), path, value);
+    }
 }

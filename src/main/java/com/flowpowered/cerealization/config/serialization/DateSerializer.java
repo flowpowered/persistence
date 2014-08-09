@@ -28,19 +28,19 @@ import java.util.Date;
 import com.flowpowered.cerealization.CastUtils;
 
 public class DateSerializer extends Serializer {
-	@Override
-	public boolean isApplicable(GenericType type) {
-		return type.getMainType() != null && type.getMainType() == Date.class;
-	}
+    @Override
+    public boolean isApplicable(GenericType type) {
+        return type.getMainType() != null && type.getMainType() == Date.class;
+    }
 
-	@Override
-	protected Object handleDeserialize(GenericType type, Object value) {
-		return CastUtils.castDate(value);
-	}
+    @Override
+    protected Object handleDeserialize(GenericType type, Object value) {
+        return CastUtils.castDate(value);
+    }
 
-	@Override
-	protected int getParametersRequired() {
-		return -1;
-	}
+    @Override
+    protected int getParametersRequired() {
+        return -1;
+    }
 
 }

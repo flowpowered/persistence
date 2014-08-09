@@ -30,33 +30,33 @@ import java.util.Map;
  * This represents a configuration that loads its values from an in-memory {@link Map}
  */
 public class MapConfiguration extends MapBasedConfiguration {
-	private Map<?, ?> map;
+    private Map<?, ?> map;
 
-	/**
-	 * Create a new configuration backed by an empty map. Loading a configuration instantiated with this constructor will do nothing.
-	 */
-	public MapConfiguration() {
-		this(null);
-	}
+    /**
+     * Create a new configuration backed by an empty map. Loading a configuration instantiated with this constructor will do nothing.
+     */
+    public MapConfiguration() {
+        this(null);
+    }
 
-	public MapConfiguration(Map<?, ?> map) {
-		super();
-		this.map = map == null ? new HashMap<Object, Object>() : map;
-	}
+    public MapConfiguration(Map<?, ?> map) {
+        super();
+        this.map = map == null ? new HashMap<Object, Object>() : map;
+    }
 
-	@Override
-	protected Map<?, ?> loadToMap() {
-		return map;
-	}
+    @Override
+    protected Map<?, ?> loadToMap() {
+        return map;
+    }
 
-	@Override
-	@SuppressWarnings ({"unchecked", "rawtypes"})
-	protected void saveFromMap(Map<?, ?> map) {
-		this.map.clear();
-		((Map) this.map).putAll(map);
-	}
+    @Override
+    @SuppressWarnings ({"unchecked", "rawtypes"})
+    protected void saveFromMap(Map<?, ?> map) {
+        this.map.clear();
+        ((Map) this.map).putAll(map);
+    }
 
-	public Map<?, ?> getMap() {
-		return map;
-	}
+    public Map<?, ?> getMap() {
+        return map;
+    }
 }

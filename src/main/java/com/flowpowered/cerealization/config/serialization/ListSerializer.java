@@ -28,38 +28,38 @@ import java.util.Collection;
 import java.util.List;
 
 public class ListSerializer extends Serializer {
-	@Override
-	public boolean isApplicable(GenericType type) {
-		return List.class.equals(type.getMainType());
-	}
+    @Override
+    public boolean isApplicable(GenericType type) {
+        return List.class.equals(type.getMainType());
+    }
 
-	@Override
-	public boolean isApplicableDeserialize(GenericType type, Object value) {
-		return super.isApplicableDeserialize(type, value) && value instanceof Collection<?>;
-	}
+    @Override
+    public boolean isApplicableDeserialize(GenericType type, Object value) {
+        return super.isApplicableDeserialize(type, value) && value instanceof Collection<?>;
+    }
 
-	@Override
-	public int getParametersRequired() {
-		return 1;
-	}
+    @Override
+    public int getParametersRequired() {
+        return 1;
+    }
 
-	@Override
-	protected Object handleDeserialize(GenericType type, Object value) {
-		List<Object> values = new ArrayList<Object>();
-		Collection<?> raw = (Collection<?>) value;
-		for (Object obj : raw) {
-			values.add(Serialization.deserialize(type.getGenerics()[0], obj));
-		}
-		return values;
-	}
+    @Override
+    protected Object handleDeserialize(GenericType type, Object value) {
+        List<Object> values = new ArrayList<Object>();
+        Collection<?> raw = (Collection<?>) value;
+        for (Object obj : raw) {
+            values.add(Serialization.deserialize(type.getGenerics()[0], obj));
+        }
+        return values;
+    }
 
-	@Override
-	protected Object handleSerialize(GenericType type, Object value) {
-		List<Object> values = new ArrayList<Object>();
-		Collection<?> raw = (Collection<?>) value;
-		for (Object obj : raw) {
-			values.add(Serialization.serialize(type.getGenerics()[0], obj));
-		}
-		return values;
-	}
+    @Override
+    protected Object handleSerialize(GenericType type, Object value) {
+        List<Object> values = new ArrayList<Object>();
+        Collection<?> raw = (Collection<?>) value;
+        for (Object obj : raw) {
+            values.add(Serialization.serialize(type.getGenerics()[0], obj));
+        }
+        return values;
+    }
 }

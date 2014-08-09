@@ -38,73 +38,73 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class ConfigurationTest {
-	private MapConfiguration config;
+    private MapConfiguration config;
 
-	@Before
-	public void setUp() throws ConfigurationException {
-		config = createConfiguration();
-		config.load();
-	}
+    @Before
+    public void setUp() throws ConfigurationException {
+        config = createConfiguration();
+        config.load();
+    }
 
-	public Map<Object, Object> getConfigMap() {
-		Map<Object, Object> newData = new HashMap<Object, Object>();
-		newData.put("string-type", "someString");
-		newData.put("int-type", 45);
-		Map<Object, Object> testNested = new HashMap<Object, Object>();
-		testNested.put("bar", "baz");
-		newData.put("foo", testNested);
-		return newData;
-	}
+    public Map<Object, Object> getConfigMap() {
+        Map<Object, Object> newData = new HashMap<Object, Object>();
+        newData.put("string-type", "someString");
+        newData.put("int-type", 45);
+        Map<Object, Object> testNested = new HashMap<Object, Object>();
+        testNested.put("bar", "baz");
+        newData.put("foo", testNested);
+        return newData;
+    }
 
-	public MapConfiguration createConfiguration() {
-		return new MapConfiguration(getConfigMap());
-	}
+    public MapConfiguration createConfiguration() {
+        return new MapConfiguration(getConfigMap());
+    }
 
-	@Test
-	public void testLoadSave() throws ConfigurationException {
-		config.load();
-		config.save();
-		assertEquals(getConfigMap(), config.getMap());
-	}
+    @Test
+    public void testLoadSave() throws ConfigurationException {
+        config.load();
+        config.save();
+        assertEquals(getConfigMap(), config.getMap());
+    }
 
-	@Test
-	public void testGetNode() {
-		ConfigurationNode node = config.getNode("string-type");
-		assertEquals("someString", node.getValue());
-		node = config.getNode("foo.bar");
-		assertEquals("baz", node.getValue());
-	}
+    @Test
+    public void testGetNode() {
+        ConfigurationNode node = config.getNode("string-type");
+        assertEquals("someString", node.getValue());
+        node = config.getNode("foo.bar");
+        assertEquals("baz", node.getValue());
+    }
 
-	@Test
-	public void testGetNewNode() {
-		ConfigurationNode node = config.getNode("unknown.node");
-		assertTrue(node != null);
-		assertEquals(null, node.getValue());
-		assertFalse(node.isAttached());
-		assertEquals(null, node.getParent());
-	}
+    @Test
+    public void testGetNewNode() {
+        ConfigurationNode node = config.getNode("unknown.node");
+        assertTrue(node != null);
+        assertEquals(null, node.getValue());
+        assertFalse(node.isAttached());
+        assertEquals(null, node.getParent());
+    }
 
-	private static final String TEST_PATH = "another.unknown.node";
-	private static final String TEST_VALUE = "Never gonna give you up!";
+    private static final String TEST_PATH = "another.unknown.node";
+    private static final String TEST_VALUE = "Never gonna give you up!";
 
-	@Test
-	public void testSetNewNode() {
-		ConfigurationNode node = config.getNode(TEST_PATH);
-		assertEquals(null, node.getValue());
-		node.setValue(TEST_VALUE);
-		assertEquals(TEST_VALUE, node.getString());
-		assertEquals(node, config.getNode(TEST_PATH));
-		assertEquals(TEST_VALUE, config.getNode(TEST_PATH).getString());
-	}
+    @Test
+    public void testSetNewNode() {
+        ConfigurationNode node = config.getNode(TEST_PATH);
+        assertEquals(null, node.getValue());
+        node.setValue(TEST_VALUE);
+        assertEquals(TEST_VALUE, node.getString());
+        assertEquals(node, config.getNode(TEST_PATH));
+        assertEquals(TEST_VALUE, config.getNode(TEST_PATH).getString());
+    }
 
-	@Test
-	public void testPathSeparator() {
-		String actualValue = config.getNode("foo", "bar").getString();
-		String value = config.getNode("foo.bar").getString();
-		assertEquals(actualValue, value);
-		config.setPathSeparator("/");
-		value = config.getNode("foo/bar").getString();
-		assertEquals(actualValue, value);
-		config.setPathSeparator(".");
-	}
+    @Test
+    public void testPathSeparator() {
+        String actualValue = config.getNode("foo", "bar").getString();
+        String value = config.getNode("foo.bar").getString();
+        assertEquals(actualValue, value);
+        config.setPathSeparator("/");
+        value = config.getNode("foo/bar").getString();
+        assertEquals(actualValue, value);
+        config.setPathSeparator(".");
+    }
 }

@@ -27,19 +27,19 @@ package com.flowpowered.cerealization.config.migration;
  * This implementation of MigrationAction changes the key of a configuration value to a predefined new key
  */
 public final class NewKey implements MigrationAction {
-	private final String[] newKey;
+    private final String[] newKey;
 
-	public NewKey(String... key) {
-		this.newKey = key;
-	}
+    public NewKey(String... key) {
+        this.newKey = key;
+    }
 
-	@Override
-	public String[] convertKey(String[] key) {
-		return newKey;
-	}
+    @Override
+    public String[] convertKey(String[] key) {
+        return newKey;
+    }
 
-	@Override
-	public Object convertValue(Object value) {
-		return value;
-	}
+    @Override
+    public Object convertValue(Object value) {
+        return value;
+    }
 }

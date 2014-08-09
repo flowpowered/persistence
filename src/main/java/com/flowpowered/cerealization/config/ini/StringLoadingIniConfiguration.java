@@ -29,20 +29,20 @@ import com.flowpowered.cerealization.data.IOFactory;
  * A subclass of IniConfiguration that loads from a String
  */
 public class StringLoadingIniConfiguration extends IniConfiguration {
-	public StringLoadingIniConfiguration(String value) {
-		super(new IOFactory.String(value));
-	}
+    public StringLoadingIniConfiguration(String value) {
+        super(new IOFactory.String(value));
+    }
 
-	@Override
-	public IOFactory.String getIOFactory() {
-		return (IOFactory.String) super.getIOFactory();
-	}
+    @Override
+    public IOFactory.String getIOFactory() {
+        return (IOFactory.String) super.getIOFactory();
+    }
 
-	public void setValue(String value) {
-		getIOFactory().setData(value);
-	}
+    public void setValue(String value) {
+        getIOFactory().setData(value);
+    }
 
-	public String getValue() {
-		return getIOFactory().getBuffer().toString();
-	}
+    public String getValue() {
+        return getIOFactory().getBuffer().toString();
+    }
 }

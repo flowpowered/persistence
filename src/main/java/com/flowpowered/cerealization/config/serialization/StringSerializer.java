@@ -24,18 +24,18 @@
 package com.flowpowered.cerealization.config.serialization;
 
 public class StringSerializer extends Serializer {
-	@Override
-	public boolean isApplicable(GenericType type) {
-		return String.class.isAssignableFrom(type.getMainType());
-	}
+    @Override
+    public boolean isApplicable(GenericType type) {
+        return String.class.isAssignableFrom(type.getMainType());
+    }
 
-	@Override
-	public int getParametersRequired() {
-		return 0;
-	}
+    @Override
+    public int getParametersRequired() {
+        return 0;
+    }
 
-	@Override
-	protected Object handleDeserialize(GenericType type, Object value) {
-		return value.toString();
-	}
+    @Override
+    protected Object handleDeserialize(GenericType type, Object value) {
+        return value.toString();
+    }
 }

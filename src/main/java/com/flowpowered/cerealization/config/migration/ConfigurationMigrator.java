@@ -39,67 +39,67 @@ import com.flowpowered.cerealization.config.FileConfiguration;
  * A simple migrator for configurations that moves values from one key to another. It can also convert values
  */
 public abstract class ConfigurationMigrator {
-	private final Configuration configuration;
+    private final Configuration configuration;
 
-	protected ConfigurationMigrator(Configuration configuration) {
-		Validate.notNull(configuration);
-		this.configuration = configuration;
-	}
+    protected ConfigurationMigrator(Configuration configuration) {
+        Validate.notNull(configuration);
+        this.configuration = configuration;
+    }
 
-	/**
-	 * Put together a collection of all keys to be migrated and their associated actions. This can be put in a static HashMap, or generated on each invocation
-	 *
-	 * @return The map of configuration keys to their associated actions
-	 */
-	protected abstract Map<String[], MigrationAction> getMigrationActions();
+    /**
+     * Put together a collection of all keys to be migrated and their associated actions. This can be put in a static HashMap, or generated on each invocation
+     *
+     * @return The map of configuration keys to their associated actions
+     */
+    protected abstract Map<String[], MigrationAction> getMigrationActions();
 
-	public Configuration getConfiguration() {
-		return configuration;
-	}
+    public Configuration getConfiguration() {
+        return configuration;
+    }
 
-	/**
-	 * This method checks whether migration is needed on the {@link Configuration} this instance is constructed with
-	 *
-	 * @return Whether migration is needed
-	 */
-	protected abstract boolean shouldMigrate();
+    /**
+     * This method checks whether migration is needed on the {@link Configuration} this instance is constructed with
+     *
+     * @return Whether migration is needed
+     */
+    protected abstract boolean shouldMigrate();
 
-	/**
-	 * Perform migration of the configuration this object was constructed with If migration was not necessary ({@link #shouldMigrate()} returned false), the method invocation will be considered
-	 * successful. If {@link #configuration} is a {@link com.flowpowered.cerealization.config.FileConfiguration}, the file the configuration vas previously stored in will be moved to (file name).old as a backup of
-	 * the data before migration
-	 *
-	 * @throws MigrationException if the configuration could not be successfully migrated
-	 */
-	public void migrate() throws MigrationException {
-		if (!shouldMigrate()) {
-			return;
-		}
+    /**
+     * Perform migration of the configuration this object was constructed with If migration was not necessary ({@link #shouldMigrate()} returned false), the method invocation will be considered
+     * successful. If {@link #configuration} is a {@link com.flowpowered.cerealization.config.FileConfiguration}, the file the configuration vas previously stored in will be moved to (file name).old as a backup of
+     * the data before migration
+     *
+     * @throws MigrationException if the configuration could not be successfully migrated
+     */
+    public void migrate() throws MigrationException {
+        if (!shouldMigrate()) {
+            return;
+        }
 
-		if (configuration instanceof FileConfiguration) {
-			File oldFile = ((FileConfiguration) configuration).getFile();
-			try {
-				FileUtils.moveFile(oldFile, new File(oldFile.getAbsolutePath() + ".old"));
-			} catch (IOException e) {
-				throw new MigrationException(e);
-			}
-		}
+        if (configuration instanceof FileConfiguration) {
+            File oldFile = ((FileConfiguration) configuration).getFile();
+            try {
+                FileUtils.moveFile(oldFile, new File(oldFile.getAbsolutePath() + ".old"));
+            } catch (IOException e) {
+                throw new MigrationException(e);
+            }
+        }
 
-		for (Map.Entry<String[], MigrationAction> entry : getMigrationActions().entrySet()) {
-			final ConfigurationNode existingNode = configuration.getNode(entry.getKey());
-			final Object existing = existingNode.getValue();
-			existingNode.remove();
-			if (existing == null || entry.getValue() == null) {
-				continue;
-			}
-			final String[] newKey = entry.getValue().convertKey(entry.getKey());
-			final Object newValue = entry.getValue().convertValue(existing);
-			configuration.getNode(newKey).setValue(newValue);
-		}
-		try {
-			configuration.save();
-		} catch (ConfigurationException e) {
-			throw new MigrationException(e);
-		}
-	}
+        for (Map.Entry<String[], MigrationAction> entry : getMigrationActions().entrySet()) {
+            final ConfigurationNode existingNode = configuration.getNode(entry.getKey());
+            final Object existing = existingNode.getValue();
+            existingNode.remove();
+            if (existing == null || entry.getValue() == null) {
+                continue;
+            }
+            final String[] newKey = entry.getValue().convertKey(entry.getKey());
+            final Object newValue = entry.getValue().convertValue(existing);
+            configuration.getNode(newKey).setValue(newValue);
+        }
+        try {
+            configuration.save();
+        } catch (ConfigurationException e) {
+            throw new MigrationException(e);
+        }
+    }
 }

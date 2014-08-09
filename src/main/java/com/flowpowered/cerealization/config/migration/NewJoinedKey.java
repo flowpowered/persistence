@@ -34,22 +34,22 @@ import com.flowpowered.cerealization.config.Configuration;
  * @see com.flowpowered.cerealization.config.Configuration#getPathSeparator()
  */
 public final class NewJoinedKey implements MigrationAction {
-	private final String newKeyPattern;
-	private final Configuration config;
+    private final String newKeyPattern;
+    private final Configuration config;
 
-	public NewJoinedKey(String newKeyPattern, Configuration config) {
-		this.newKeyPattern = newKeyPattern;
-		this.config = config;
-	}
+    public NewJoinedKey(String newKeyPattern, Configuration config) {
+        this.newKeyPattern = newKeyPattern;
+        this.config = config;
+    }
 
-	@Override
-	public String[] convertKey(String[] key) {
-		String oldKey = StringUtils.join(key, config.getPathSeparator());
-		return config.getPathSeparatorPattern().split(newKeyPattern.replace("%", oldKey));
-	}
+    @Override
+    public String[] convertKey(String[] key) {
+        String oldKey = StringUtils.join(key, config.getPathSeparator());
+        return config.getPathSeparatorPattern().split(newKeyPattern.replace("%", oldKey));
+    }
 
-	@Override
-	public Object convertValue(Object value) {
-		return value;
-	}
+    @Override
+    public Object convertValue(Object value) {
+        return value;
+    }
 }

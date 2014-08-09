@@ -29,10 +29,10 @@ import java.io.File;
  * Represents a configuration that loads from a file
  */
 public interface FileConfiguration extends Configuration {
-	/**
-	 * Returns the file that this configuration loads from.
-	 *
-	 * @return The file that this configuration loads from
-	 */
-	public File getFile();
+    /**
+     * Returns the file that this configuration loads from.
+     *
+     * @return The file that this configuration loads from
+     */
+    public File getFile();
 }

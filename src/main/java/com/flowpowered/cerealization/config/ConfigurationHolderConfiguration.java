@@ -34,31 +34,31 @@ import com.flowpowered.cerealization.ReflectionUtils;
  * fields will be automatically associated with the attached configuration and have their default values loaded into the configuration as needed on load
  */
 public abstract class ConfigurationHolderConfiguration extends ConfigurationWrapper {
-	private final List<Field> holders = new ArrayList<Field>();
+    private final List<Field> holders = new ArrayList<Field>();
 
-	public ConfigurationHolderConfiguration(Configuration base) {
-		super(base);
-		for (Field field : ReflectionUtils.getDeclaredFieldsRecur(getClass())) {
-			field.setAccessible(true);
+    public ConfigurationHolderConfiguration(Configuration base) {
+        super(base);
+        for (Field field : ReflectionUtils.getDeclaredFieldsRecur(getClass())) {
+            field.setAccessible(true);
 
-			if (ConfigurationHolder.class.isAssignableFrom(field.getType())) {
-				holders.add(field);
-			}
-		}
-	}
+            if (ConfigurationHolder.class.isAssignableFrom(field.getType())) {
+                holders.add(field);
+            }
+        }
+    }
 
-	@Override
-	public void load() throws ConfigurationException {
-		super.load();
-		for (Field field : this.holders) {
-			try {
-				ConfigurationHolder holder = (ConfigurationHolder) field.get(this);
-				if (holder != null) {
-					holder.setConfiguration(getConfiguration());
-					holder.getValue(); // Initialize the ConfigurationHolder's value
-				}
-			} catch (IllegalAccessException e) {
-			}
-		}
-	}
+    @Override
+    public void load() throws ConfigurationException {
+        super.load();
+        for (Field field : this.holders) {
+            try {
+                ConfigurationHolder holder = (ConfigurationHolder) field.get(this);
+                if (holder != null) {
+                    holder.setConfiguration(getConfiguration());
+                    holder.getValue(); // Initialize the ConfigurationHolder's value
+                }
+            } catch (IllegalAccessException e) {
+            }
+        }
+    }
 }

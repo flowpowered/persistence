@@ -52,39 +52,39 @@ import org.yaml.snakeyaml.representer.Representer;
  * A custom representer that represents null values as empty text instead of {@code null}
  */
 public class EmptyNullRepresenter extends Representer {
-	public EmptyNullRepresenter() {
-		super();
-		nullRepresenter = new EmptyRepresentNull();
-	}
+    public EmptyNullRepresenter() {
+        super();
+        nullRepresenter = new EmptyRepresentNull();
+    }
 
-	protected class EmptyRepresentNull implements Represent {
-		@Override
-		public Node representData(Object data) {
-			return representScalar(Tag.NULL, ""); // Changed "null" to "" so as to avoid writing nulls
-		}
-	}
+    protected class EmptyRepresentNull implements Represent {
+        @Override
+        public Node representData(Object data) {
+            return representScalar(Tag.NULL, ""); // Changed "null" to "" so as to avoid writing nulls
+        }
+    }
 
-	// Code borrowed from snakeyaml (http://code.google.com/p/snakeyaml/source/browse/src/test/java/org/yaml/snakeyaml/issues/issue60/SkipBeanTest.java)
-	@Override
-	protected NodeTuple representJavaBeanProperty(Object javaBean, Property property, Object propertyValue, Tag customTag) {
-		NodeTuple tuple = super.representJavaBeanProperty(javaBean, property, propertyValue, customTag);
-		Node valueNode = tuple.getValueNode();
-		if (valueNode instanceof CollectionNode) {
-			// Removed null check
-			if (Tag.SEQ.equals(valueNode.getTag())) {
-				SequenceNode seq = (SequenceNode) valueNode;
-				if (seq.getValue().isEmpty()) {
-					return null; // skip empty lists
-				}
-			}
-			if (Tag.MAP.equals(valueNode.getTag())) {
-				MappingNode seq = (MappingNode) valueNode;
-				if (seq.getValue().isEmpty()) {
-					return null; // skip empty maps
-				}
-			}
-		}
-		return tuple;
-	}
-	// End of borrowed code
+    // Code borrowed from snakeyaml (http://code.google.com/p/snakeyaml/source/browse/src/test/java/org/yaml/snakeyaml/issues/issue60/SkipBeanTest.java)
+    @Override
+    protected NodeTuple representJavaBeanProperty(Object javaBean, Property property, Object propertyValue, Tag customTag) {
+        NodeTuple tuple = super.representJavaBeanProperty(javaBean, property, propertyValue, customTag);
+        Node valueNode = tuple.getValueNode();
+        if (valueNode instanceof CollectionNode) {
+            // Removed null check
+            if (Tag.SEQ.equals(valueNode.getTag())) {
+                SequenceNode seq = (SequenceNode) valueNode;
+                if (seq.getValue().isEmpty()) {
+                    return null; // skip empty lists
+                }
+            }
+            if (Tag.MAP.equals(valueNode.getTag())) {
+                MappingNode seq = (MappingNode) valueNode;
+                if (seq.getValue().isEmpty()) {
+                    return null; // skip empty maps
+                }
+            }
+        }
+        return tuple;
+    }
+    // End of borrowed code
 }

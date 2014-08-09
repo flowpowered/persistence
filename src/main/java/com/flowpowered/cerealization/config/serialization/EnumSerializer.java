@@ -24,28 +24,28 @@
 package com.flowpowered.cerealization.config.serialization;
 
 public class EnumSerializer extends Serializer {
-	@Override
-	public boolean isApplicable(GenericType target) {
-		return target.getMainType() != null && target.getMainType().isEnum();
-	}
+    @Override
+    public boolean isApplicable(GenericType target) {
+        return target.getMainType() != null && target.getMainType().isEnum();
+    }
 
-	@Override
-	protected int getParametersRequired() {
-		return 0;
-	}
+    @Override
+    protected int getParametersRequired() {
+        return 0;
+    }
 
-	@Override
-	@SuppressWarnings ("unchecked")
-	protected Object handleDeserialize(GenericType type, Object value) {
-		try {
-			return Enum.valueOf(type.getMainType().asSubclass(Enum.class), String.valueOf(value).toUpperCase());
-		} catch (IllegalArgumentException e) {
-			return null;
-		}
-	}
+    @Override
+    @SuppressWarnings ("unchecked")
+    protected Object handleDeserialize(GenericType type, Object value) {
+        try {
+            return Enum.valueOf(type.getMainType().asSubclass(Enum.class), String.valueOf(value).toUpperCase());
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+    }
 
-	@Override
-	protected Object handleSerialize(GenericType type, Object value) {
-		return ((Enum<?>) value).name();
-	}
+    @Override
+    protected Object handleSerialize(GenericType type, Object value) {
+        return ((Enum<?>) value).name();
+    }
 }

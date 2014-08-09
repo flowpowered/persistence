@@ -29,64 +29,64 @@ import java.util.Comparator;
  * Handles serializing and deserializing objects for use in annotated configurations.
  */
 public abstract class Serializer {
-	private boolean allowsNullValue;
+    private boolean allowsNullValue;
 
-	public Object deserialize(GenericType type, Object value) {
-		if (value == null && !allowsNullValue()) {
-			return null;
-		}
+    public Object deserialize(GenericType type, Object value) {
+        if (value == null && !allowsNullValue()) {
+            return null;
+        }
 
-		if (isApplicableDeserialize(type, value) && (getParametersRequired() == -1
-				|| type.getGenerics().length == getParametersRequired())) {
-			return handleDeserialize(type, value);
-		} else {
-			return null;
-		}
-	}
+        if (isApplicableDeserialize(type, value) && (getParametersRequired() == -1
+                || type.getGenerics().length == getParametersRequired())) {
+            return handleDeserialize(type, value);
+        } else {
+            return null;
+        }
+    }
 
-	public Object serialize(GenericType type, Object value) {
-		if (value == null && !allowsNullValue()) {
-			return null;
-		}
+    public Object serialize(GenericType type, Object value) {
+        if (value == null && !allowsNullValue()) {
+            return null;
+        }
 
-		if (isApplicableSerialize(type, value) && (getParametersRequired() == -1
-				|| type.getGenerics().length == getParametersRequired())) {
-			return handleSerialize(type, value);
-		} else {
-			return null;
-		}
-	}
+        if (isApplicableSerialize(type, value) && (getParametersRequired() == -1
+                || type.getGenerics().length == getParametersRequired())) {
+            return handleSerialize(type, value);
+        } else {
+            return null;
+        }
+    }
 
-	protected abstract Object handleDeserialize(GenericType type, Object value);
+    protected abstract Object handleDeserialize(GenericType type, Object value);
 
-	protected Object handleSerialize(GenericType type, Object value) {
-		return value;
-	}
+    protected Object handleSerialize(GenericType type, Object value) {
+        return value;
+    }
 
-	public boolean isApplicableDeserialize(GenericType type, Object value) {
-		return isApplicable(type);
-	}
+    public boolean isApplicableDeserialize(GenericType type, Object value) {
+        return isApplicable(type);
+    }
 
-	public abstract boolean isApplicable(GenericType type);
+    public abstract boolean isApplicable(GenericType type);
 
-	public boolean isApplicableSerialize(GenericType type, Object value) {
-		return isApplicable(type);
-	}
+    public boolean isApplicableSerialize(GenericType type, Object value) {
+        return isApplicable(type);
+    }
 
-	protected abstract int getParametersRequired();
+    protected abstract int getParametersRequired();
 
-	public boolean allowsNullValue() {
-		return allowsNullValue;
-	}
+    public boolean allowsNullValue() {
+        return allowsNullValue;
+    }
 
-	protected void setAllowsNullValue(boolean allowsNullValue) {
-		this.allowsNullValue = allowsNullValue;
-	}
+    protected void setAllowsNullValue(boolean allowsNullValue) {
+        this.allowsNullValue = allowsNullValue;
+    }
 
-	public static class NeededGenericsComparator implements Comparator<Serializer> {
-		@Override
-		public int compare(Serializer a, Serializer b) {
-			return Integer.valueOf(a.getParametersRequired()).compareTo(b.getParametersRequired());
-		}
-	}
+    public static class NeededGenericsComparator implements Comparator<Serializer> {
+        @Override
+        public int compare(Serializer a, Serializer b) {
+            return Integer.valueOf(a.getParametersRequired()).compareTo(b.getParametersRequired());
+        }
+    }
 }

@@ -24,28 +24,28 @@
 package com.flowpowered.cerealization.config.serialization;
 
 public class SameSerializer extends Serializer {
-	@Override
-	public boolean isApplicable(GenericType type) {
-		return type.getMainType() != null;
-	}
+    @Override
+    public boolean isApplicable(GenericType type) {
+        return type.getMainType() != null;
+    }
 
-	@Override
-	public boolean isApplicableDeserialize(GenericType type, Object value) {
-		return super.isApplicableDeserialize(type, value) && type.getMainType().isInstance(value);
-	}
+    @Override
+    public boolean isApplicableDeserialize(GenericType type, Object value) {
+        return super.isApplicableDeserialize(type, value) && type.getMainType().isInstance(value);
+    }
 
-	@Override
-	public boolean isApplicableSerialize(GenericType type, Object val) {
-		return false;
-	}
+    @Override
+    public boolean isApplicableSerialize(GenericType type, Object val) {
+        return false;
+    }
 
-	@Override
-	public int getParametersRequired() {
-		return 0;
-	}
+    @Override
+    public int getParametersRequired() {
+        return 0;
+    }
 
-	@Override
-	protected Object handleDeserialize(GenericType type, Object value) {
-		return value;
-	}
+    @Override
+    protected Object handleDeserialize(GenericType type, Object value) {
+        return value;
+    }
 }

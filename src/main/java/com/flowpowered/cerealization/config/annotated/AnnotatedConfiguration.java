@@ -29,26 +29,26 @@ import com.flowpowered.cerealization.config.ConfigurationNodeSource;
 import com.flowpowered.cerealization.config.ConfigurationWrapper;
 
 public abstract class AnnotatedConfiguration extends ConfigurationWrapper {
-	public AnnotatedConfiguration() {
-	}
+    public AnnotatedConfiguration() {
+    }
 
-	public AnnotatedConfiguration(Configuration config) {
-		super(config);
-	}
+    public AnnotatedConfiguration(Configuration config) {
+        super(config);
+    }
 
-	public abstract void load(ConfigurationNodeSource source) throws ConfigurationException;
+    public abstract void load(ConfigurationNodeSource source) throws ConfigurationException;
 
-	public abstract void save(ConfigurationNodeSource source) throws ConfigurationException;
+    public abstract void save(ConfigurationNodeSource source) throws ConfigurationException;
 
-	@Override
-	public void load() throws ConfigurationException {
-		super.load();
-		load(this);
-	}
+    @Override
+    public void load() throws ConfigurationException {
+        super.load();
+        load(this);
+    }
 
-	@Override
-	public void save() throws ConfigurationException {
-		save(this);
-		super.save();
-	}
+    @Override
+    public void save() throws ConfigurationException {
+        save(this);
+        super.save();
+    }
 }

@@ -30,11 +30,11 @@ import com.flowpowered.cerealization.config.Configuration;
  * CommentedConfigurationNodes for convenience.<br/>
  */
 public interface CommentedConfiguration extends Configuration {
-	public CommentedConfigurationNode createConfigurationNode(String[] path, Object value);
+    public CommentedConfigurationNode createConfigurationNode(String[] path, Object value);
 
-	@Override
-	public CommentedConfigurationNode getNode(String... node);
+    @Override
+    public CommentedConfigurationNode getNode(String... node);
 
-	@Override
-	public CommentedConfigurationNode getNode(String path);
+    @Override
+    public CommentedConfigurationNode getNode(String path);
 }

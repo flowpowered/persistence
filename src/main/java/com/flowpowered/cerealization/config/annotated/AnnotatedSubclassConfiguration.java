@@ -37,63 +37,63 @@ import com.flowpowered.cerealization.config.ConfigurationNodeSource;
  * The base class for annotated configurations Annotated configurations are created by subclassing AnnotatedConfiguration and having fields annotated with "@Setting"
  */
 public abstract class AnnotatedSubclassConfiguration extends AnnotatedConfiguration {
-	private final Set<Field> fields = new HashSet<Field>();
-	private boolean fieldsCached = false;
-	private boolean isConfigured;
+    private final Set<Field> fields = new HashSet<Field>();
+    private boolean fieldsCached = false;
+    private boolean isConfigured;
 
-	public AnnotatedSubclassConfiguration(Configuration baseConfig) {
-		super(baseConfig);
-	}
+    public AnnotatedSubclassConfiguration(Configuration baseConfig) {
+        super(baseConfig);
+    }
 
-	public boolean isConfigured() {
-		return isConfigured;
-	}
+    public boolean isConfigured() {
+        return isConfigured;
+    }
 
-	@SuppressWarnings ("unchecked")
-	private Set<Field> getFields() {
-		if (!fieldsCached) {
-			fields.addAll(ReflectionUtils.getDeclaredFieldsRecur(getClass(), Setting.class));
-			fieldsCached = true;
-		}
-		return fields;
-	}
+    @SuppressWarnings ("unchecked")
+    private Set<Field> getFields() {
+        if (!fieldsCached) {
+            fields.addAll(ReflectionUtils.getDeclaredFieldsRecur(getClass(), Setting.class));
+            fieldsCached = true;
+        }
+        return fields;
+    }
 
-	@Override
-	public void load(ConfigurationNodeSource source) throws ConfigurationException {
-		for (Field field : getFields()) {
-			field.setAccessible(true);
-			String[] key = field.getAnnotation(Setting.class).value();
-			if (key.length == 0) {
-				key = new String[] {field.getName()};
-			}
-			ConfigurationNode node = source.getNode(key);
-			final Object value = node.getTypedValue(field.getGenericType());
-			try {
-				if (value != null) {
-					field.set(this, value);
-				} else {
-					node.setValue(field.getGenericType(), field.get(this));
-				}
-			} catch (IllegalAccessException e) {
-				throw new ConfigurationException(e);
-			}
-		}
-		isConfigured = true;
-	}
+    @Override
+    public void load(ConfigurationNodeSource source) throws ConfigurationException {
+        for (Field field : getFields()) {
+            field.setAccessible(true);
+            String[] key = field.getAnnotation(Setting.class).value();
+            if (key.length == 0) {
+                key = new String[] {field.getName()};
+            }
+            ConfigurationNode node = source.getNode(key);
+            final Object value = node.getTypedValue(field.getGenericType());
+            try {
+                if (value != null) {
+                    field.set(this, value);
+                } else {
+                    node.setValue(field.getGenericType(), field.get(this));
+                }
+            } catch (IllegalAccessException e) {
+                throw new ConfigurationException(e);
+            }
+        }
+        isConfigured = true;
+    }
 
-	@Override
-	public void save(ConfigurationNodeSource source) throws ConfigurationException {
-		for (Field field : getFields()) {
-			field.setAccessible(true);
-			String[] key = field.getAnnotation(Setting.class).value();
-			if (key.length == 0) {
-				key = new String[] {field.getName()};
-			}
-			try {
-				source.getNode(key).setValue(field.getGenericType(), field.get(this));
-			} catch (IllegalAccessException e) {
-				throw new ConfigurationException(e);
-			}
-		}
-	}
+    @Override
+    public void save(ConfigurationNodeSource source) throws ConfigurationException {
+        for (Field field : getFields()) {
+            field.setAccessible(true);
+            String[] key = field.getAnnotation(Setting.class).value();
+            if (key.length == 0) {
+                key = new String[] {field.getName()};
+            }
+            try {
+                source.getNode(key).setValue(field.getGenericType(), field.get(this));
+            } catch (IllegalAccessException e) {
+                throw new ConfigurationException(e);
+            }
+        }
+    }
 }

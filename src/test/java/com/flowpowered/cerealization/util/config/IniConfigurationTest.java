@@ -38,42 +38,42 @@ import static org.junit.Assert.assertTrue;
 import static com.flowpowered.cerealization.config.commented.CommentedConfigurationNode.LINE_SEPARATOR;
 
 public class IniConfigurationTest {
-	@Test
-	public void testBasicLoading() throws ConfigurationException {
-		StringLoadingIniConfiguration subject = new StringLoadingIniConfiguration("[section]" + LINE_SEPARATOR + "node = value" + LINE_SEPARATOR);
-		subject.load();
-		ConfigurationNode sectionNode = subject.getNode("section");
-		assertNotNull(sectionNode);
-		assertTrue(sectionNode.isAttached());
-		assertTrue(sectionNode.hasChildren());
-		assertEquals("value", subject.getNode("section.node").getString());
-	}
+    @Test
+    public void testBasicLoading() throws ConfigurationException {
+        StringLoadingIniConfiguration subject = new StringLoadingIniConfiguration("[section]" + LINE_SEPARATOR + "node = value" + LINE_SEPARATOR);
+        subject.load();
+        ConfigurationNode sectionNode = subject.getNode("section");
+        assertNotNull(sectionNode);
+        assertTrue(sectionNode.isAttached());
+        assertTrue(sectionNode.hasChildren());
+        assertEquals("value", subject.getNode("section.node").getString());
+    }
 
-	@Test
-	public void testBasicSaving() throws ConfigurationException {
-		StringLoadingIniConfiguration subject = new StringLoadingIniConfiguration(null);
-		subject.getNode("section.node").setValue("value");
-		subject.save();
-		assertEquals("[section]" + LINE_SEPARATOR + "node=value" + LINE_SEPARATOR, subject.getValue());
-	}
+    @Test
+    public void testBasicSaving() throws ConfigurationException {
+        StringLoadingIniConfiguration subject = new StringLoadingIniConfiguration(null);
+        subject.getNode("section.node").setValue("value");
+        subject.save();
+        assertEquals("[section]" + LINE_SEPARATOR + "node=value" + LINE_SEPARATOR, subject.getValue());
+    }
 
-	@Test
-	public void testCommentLoading() throws ConfigurationException {
-		StringLoadingIniConfiguration subject = new StringLoadingIniConfiguration("# This is the first section!" + LINE_SEPARATOR + "[section]" + LINE_SEPARATOR + "# This is a node!" + LINE_SEPARATOR + "# With a multiline comment!" + LINE_SEPARATOR + "node=value" + LINE_SEPARATOR);
-		subject.load();
-		ConfigurationNode node = subject.getNode("section");
-		assertArrayEquals(new String[] {"This is the first section!"}, ((CommentedConfigurationNode) node).getComment());
-		node = subject.getNode("section.node");
-		assertArrayEquals(new String[] {"This is a node!", "With a multiline comment!"}, ((CommentedConfigurationNode) node).getComment());
-	}
+    @Test
+    public void testCommentLoading() throws ConfigurationException {
+        StringLoadingIniConfiguration subject = new StringLoadingIniConfiguration("# This is the first section!" + LINE_SEPARATOR + "[section]" + LINE_SEPARATOR + "# This is a node!" + LINE_SEPARATOR + "# With a multiline comment!" + LINE_SEPARATOR + "node=value" + LINE_SEPARATOR);
+        subject.load();
+        ConfigurationNode node = subject.getNode("section");
+        assertArrayEquals(new String[] {"This is the first section!"}, ((CommentedConfigurationNode) node).getComment());
+        node = subject.getNode("section.node");
+        assertArrayEquals(new String[] {"This is a node!", "With a multiline comment!"}, ((CommentedConfigurationNode) node).getComment());
+    }
 
-	@Test
-	public void testCommentSaving() throws ConfigurationException {
-		StringLoadingIniConfiguration subject = new StringLoadingIniConfiguration(null);
-		subject.getNode("section").setComment("Hello", "World");
-		subject.getNode("section", "node").setValue("value");
-		subject.getNode("section", "node").setComment("Node Comment");
-		subject.save();
-		assertEquals("# Hello" + LINE_SEPARATOR + "# World" + LINE_SEPARATOR + "[section]" + LINE_SEPARATOR + "# Node Comment" + LINE_SEPARATOR + "node=value" + LINE_SEPARATOR, subject.getValue());
-	}
+    @Test
+    public void testCommentSaving() throws ConfigurationException {
+        StringLoadingIniConfiguration subject = new StringLoadingIniConfiguration(null);
+        subject.getNode("section").setComment("Hello", "World");
+        subject.getNode("section", "node").setValue("value");
+        subject.getNode("section", "node").setComment("Node Comment");
+        subject.save();
+        assertEquals("# Hello" + LINE_SEPARATOR + "# World" + LINE_SEPARATOR + "[section]" + LINE_SEPARATOR + "# Node Comment" + LINE_SEPARATOR + "node=value" + LINE_SEPARATOR, subject.getValue());
+    }
 }

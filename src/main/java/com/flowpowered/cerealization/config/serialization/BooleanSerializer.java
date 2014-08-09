@@ -24,22 +24,22 @@
 package com.flowpowered.cerealization.config.serialization;
 
 public class BooleanSerializer extends Serializer {
-	@Override
-	public boolean isApplicable(GenericType type) {
-		return boolean.class.isAssignableFrom(type.getMainType()) || Boolean.class.isAssignableFrom(type.getMainType());
-	}
+    @Override
+    public boolean isApplicable(GenericType type) {
+        return boolean.class.isAssignableFrom(type.getMainType()) || Boolean.class.isAssignableFrom(type.getMainType());
+    }
 
-	@Override
-	protected int getParametersRequired() {
-		return 0;
-	}
+    @Override
+    protected int getParametersRequired() {
+        return 0;
+    }
 
-	@Override
-	protected Object handleDeserialize(GenericType type, Object value) {
-		if (value instanceof Boolean) {
-			return value;
-		} else {
-			return Boolean.parseBoolean(value.toString());
-		}
-	}
+    @Override
+    protected Object handleDeserialize(GenericType type, Object value) {
+        if (value instanceof Boolean) {
+            return value;
+        } else {
+            return Boolean.parseBoolean(value.toString());
+        }
+    }
 }

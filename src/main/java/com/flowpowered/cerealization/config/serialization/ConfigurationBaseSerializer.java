@@ -34,80 +34,80 @@ import com.flowpowered.cerealization.config.MapConfiguration;
 import com.flowpowered.cerealization.config.annotated.AnnotatedSubclassConfiguration;
 
 public class ConfigurationBaseSerializer extends Serializer {
-	private static final Map<Class<? extends AnnotatedSubclassConfiguration>,
-			Constructor<? extends AnnotatedSubclassConfiguration>> CACHED_CONSTRUCTORS =
-			new HashMap<Class<? extends AnnotatedSubclassConfiguration>, Constructor<? extends AnnotatedSubclassConfiguration>>();
+    private static final Map<Class<? extends AnnotatedSubclassConfiguration>,
+            Constructor<? extends AnnotatedSubclassConfiguration>> CACHED_CONSTRUCTORS =
+            new HashMap<Class<? extends AnnotatedSubclassConfiguration>, Constructor<? extends AnnotatedSubclassConfiguration>>();
 
-	public ConfigurationBaseSerializer() {
-		setAllowsNullValue(true);
-	}
+    public ConfigurationBaseSerializer() {
+        setAllowsNullValue(true);
+    }
 
-	@Override
-	public boolean isApplicable(GenericType type) {
-		return AnnotatedSubclassConfiguration.class.isAssignableFrom(type.getMainType());
-	}
+    @Override
+    public boolean isApplicable(GenericType type) {
+        return AnnotatedSubclassConfiguration.class.isAssignableFrom(type.getMainType());
+    }
 
-	@Override
-	public boolean isApplicableDeserialize(GenericType type, Object value) {
-		return super.isApplicableDeserialize(type, value) && (value == null || value instanceof Map);
-	}
+    @Override
+    public boolean isApplicableDeserialize(GenericType type, Object value) {
+        return super.isApplicableDeserialize(type, value) && (value == null || value instanceof Map);
+    }
 
-	@Override
-	protected int getParametersRequired() {
-		return -1;
-	}
+    @Override
+    protected int getParametersRequired() {
+        return -1;
+    }
 
-	@Override
-	protected Object handleDeserialize(GenericType type, Object value) {
-		if (value == null) {
-			value = new HashMap<Object, Object>();
-		}
+    @Override
+    protected Object handleDeserialize(GenericType type, Object value) {
+        if (value == null) {
+            value = new HashMap<Object, Object>();
+        }
 
-		Class<? extends AnnotatedSubclassConfiguration> configClass = type.getMainType().asSubclass(AnnotatedSubclassConfiguration.class);
-		Constructor<? extends AnnotatedSubclassConfiguration> constructor = CACHED_CONSTRUCTORS.get(configClass);
-		if (constructor == null) {
-			try {
-				constructor = configClass.getDeclaredConstructor(Configuration.class);
-				constructor.setAccessible(true);
-			} catch (NoSuchMethodException e) {
-				return null;
-			}
-			CACHED_CONSTRUCTORS.put(configClass, constructor);
-		}
-		AnnotatedSubclassConfiguration config = null;
-		MapConfiguration rawConfig = new MapConfiguration((Map<?, ?>) value);
+        Class<? extends AnnotatedSubclassConfiguration> configClass = type.getMainType().asSubclass(AnnotatedSubclassConfiguration.class);
+        Constructor<? extends AnnotatedSubclassConfiguration> constructor = CACHED_CONSTRUCTORS.get(configClass);
+        if (constructor == null) {
+            try {
+                constructor = configClass.getDeclaredConstructor(Configuration.class);
+                constructor.setAccessible(true);
+            } catch (NoSuchMethodException e) {
+                return null;
+            }
+            CACHED_CONSTRUCTORS.put(configClass, constructor);
+        }
+        AnnotatedSubclassConfiguration config = null;
+        MapConfiguration rawConfig = new MapConfiguration((Map<?, ?>) value);
 
-		try {
-			config = constructor.newInstance(rawConfig);
-		} catch (InstantiationException ignore) {
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-			return null;
-		} catch (InvocationTargetException e) {
-			e.getCause().printStackTrace();
-		}
+        try {
+            config = constructor.newInstance(rawConfig);
+        } catch (InstantiationException ignore) {
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            return null;
+        } catch (InvocationTargetException e) {
+            e.getCause().printStackTrace();
+        }
 
-		if (config != null) {
-			try {
-				config.load();
-			} catch (ConfigurationException e) {
-				e.printStackTrace();
-				return null;
-			}
-		}
+        if (config != null) {
+            try {
+                config.load();
+            } catch (ConfigurationException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
 
-		return config;
-	}
+        return config;
+    }
 
-	@Override
-	protected Object handleSerialize(GenericType type, Object val) {
-		MapConfiguration config = new MapConfiguration();
-		try {
-			((AnnotatedSubclassConfiguration) val).save(config);
-			config.save();
-		} catch (ConfigurationException e) {
-			return null;
-		}
-		return config.getMap();
-	}
+    @Override
+    protected Object handleSerialize(GenericType type, Object val) {
+        MapConfiguration config = new MapConfiguration();
+        try {
+            ((AnnotatedSubclassConfiguration) val).save(config);
+            config.save();
+        } catch (ConfigurationException e) {
+            return null;
+        }
+        return config.getMap();
+    }
 }

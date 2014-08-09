@@ -34,30 +34,30 @@ import com.flowpowered.cerealization.config.MapConfiguration;
 import static org.junit.Assert.assertEquals;
 
 public class ConfigurationHolderConfigurationTest {
-	private static class TestConfig extends ConfigurationHolderConfiguration {
-		public static final int TEST_ONE_VALUE = 42;
-		public static final ConfigurationHolder TEST_ONE = new ConfigurationHolder(TEST_ONE_VALUE, "test", "one");
-		public static final String TEST_TWO_VALUE = "richard";
-		public static final ConfigurationHolder TEST_TWO = new ConfigurationHolder(TEST_TWO_VALUE, "test", "two");
+    private static class TestConfig extends ConfigurationHolderConfiguration {
+        public static final int TEST_ONE_VALUE = 42;
+        public static final ConfigurationHolder TEST_ONE = new ConfigurationHolder(TEST_ONE_VALUE, "test", "one");
+        public static final String TEST_TWO_VALUE = "richard";
+        public static final ConfigurationHolder TEST_TWO = new ConfigurationHolder(TEST_TWO_VALUE, "test", "two");
 
-		public TestConfig(Configuration base) {
-			super(base);
-		}
-	}
+        public TestConfig(Configuration base) {
+            super(base);
+        }
+    }
 
-	@Test
-	public void testConfigSet() throws ConfigurationException {
-		TestConfig testConfig = new TestConfig(new MapConfiguration());
-		testConfig.load();
-		assertEquals(testConfig.getConfiguration(), TestConfig.TEST_ONE.getConfiguration());
-		assertEquals(testConfig.getConfiguration(), TestConfig.TEST_TWO.getConfiguration());
-	}
+    @Test
+    public void testConfigSet() throws ConfigurationException {
+        TestConfig testConfig = new TestConfig(new MapConfiguration());
+        testConfig.load();
+        assertEquals(testConfig.getConfiguration(), TestConfig.TEST_ONE.getConfiguration());
+        assertEquals(testConfig.getConfiguration(), TestConfig.TEST_TWO.getConfiguration());
+    }
 
-	@Test
-	public void testSetDefaultValues() throws ConfigurationException {
-		TestConfig testConfig = new TestConfig(new MapConfiguration());
-		testConfig.load();
-		assertEquals(TestConfig.TEST_ONE_VALUE, testConfig.getConfiguration().getNode(TestConfig.TEST_ONE.getPathElements()).getValue());
-		assertEquals(TestConfig.TEST_TWO_VALUE, testConfig.getConfiguration().getNode(TestConfig.TEST_TWO.getPathElements()).getValue());
-	}
+    @Test
+    public void testSetDefaultValues() throws ConfigurationException {
+        TestConfig testConfig = new TestConfig(new MapConfiguration());
+        testConfig.load();
+        assertEquals(TestConfig.TEST_ONE_VALUE, testConfig.getConfiguration().getNode(TestConfig.TEST_ONE.getPathElements()).getValue());
+        assertEquals(TestConfig.TEST_TWO_VALUE, testConfig.getConfiguration().getNode(TestConfig.TEST_TWO.getPathElements()).getValue());
+    }
 }

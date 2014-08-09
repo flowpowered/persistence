@@ -27,13 +27,13 @@ package com.flowpowered.cerealization.config.migration;
  * This exception is thrown when an error occurs while migrating the config
  */
 public class MigrationException extends Exception {
-	private static final long serialVersionUID = 3201476285205550742L;
+    private static final long serialVersionUID = 3201476285205550742L;
 
-	public MigrationException(String message) {
-		super(message);
-	}
+    public MigrationException(String message) {
+        super(message);
+    }
 
-	public MigrationException(Throwable cause) {
-		super(cause);
-	}
+    public MigrationException(Throwable cause) {
+        super(cause);
+    }
 }
