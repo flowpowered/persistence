@@ -1,4 +1,4 @@
-Flow Cerealization [![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)][License] [![Build Status](http://img.shields.io/travis/flow/flow-cerealization/master.svg?style=flat)](https://travis-ci.org/flow/flow-cerealization) [![Coverage Status](http://img.shields.io/coveralls/flow/flow-cerealization/master.svg?style=flat)](https://coveralls.io/r/flow/flow-cerealization) [![Flattr this](http://img.shields.io/badge/flattr-donate-brightgreen.svg?style=flat)][Donate]
+Flow Cerealization [![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)][License] [![Build Status](http://img.shields.io/travis/flow/flow-cerealization/master.svg?style=flat)](https://travis-ci.org/flow/flow-cerealization) [![Coverage Status](http://img.shields.io/coveralls/flow/flow-cerealization/master.svg?style=flat)](https://coveralls.io/r/flow/flow-cerealization) [![Flattr this](http://img.shields.io/badge/flattr-donate-lightgrey.svg?style=flat)][Donate]
 ==================
 Cerealization is a flexible serialization and configuration library for the Flow collection.
 
