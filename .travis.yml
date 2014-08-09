@@ -17,7 +17,7 @@ notifications:
   # Disable build status email notifications, until the issue with forks is fixed
   email: false
   webhooks:
-    # Send build information and status to Notifico.
+    # Send build information and status to Notifico
     - http://n.tkte.ch/h/2038/s1-vgwQBXo6CiTpkjY8K2Rz_
 
 # Environmental system variables
