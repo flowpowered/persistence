@@ -26,8 +26,8 @@ package com.flowpowered.cerealization.config.commented;
 import com.flowpowered.cerealization.config.Configuration;
 
 /**
- * A configuration that accepts comments. <br/> All ConfigurationNodes passed to this configuration must be CommentedConfigurationNode.<br/> The node getters for this configuration all return
- * CommentedConfigurationNodes for convenience.<br/>
+ * A configuration that accepts comments. <br> All ConfigurationNodes passed to this configuration must be CommentedConfigurationNode.<br> The node getters for this configuration all return
+ * CommentedConfigurationNodes for convenience.<br>
  */
 public interface CommentedConfiguration extends Configuration {
     public CommentedConfigurationNode createConfigurationNode(String[] path, Object value);

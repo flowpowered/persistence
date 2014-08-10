@@ -93,7 +93,7 @@ public interface ConfigurationNodeSource {
     public Map<String, ConfigurationNode> getChildren();
 
     /**
-     * Return the raw Object values of this node's children ConfigurationNodes are converted into Map<String, Object>s for the result of this method
+     * Return the raw Object values of this node's children ConfigurationNodes are converted into Map&lt;String, Object&gt;s for the result of this method
      *
      * @return The node's children values
      */

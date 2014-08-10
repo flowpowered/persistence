@@ -101,24 +101,24 @@
 
     <!-- Project dependencies -->
     <dependencies>
-        <!-- Provided by third-party -->
+        <!-- Transitive -->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.4</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.3.2</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
             <version>1.13</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
         <!-- Testing only -->
         <dependency>
