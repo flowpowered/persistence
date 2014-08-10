@@ -96,10 +96,6 @@
         <pluginRepository>
             <id>sonatype-nexus</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
         </pluginRepository>
     </pluginRepositories>
 

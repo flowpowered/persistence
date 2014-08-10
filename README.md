@@ -2,6 +2,12 @@ Flow Cerealization [![License](http://img.shields.io/badge/license-MIT-lightgrey
 ==================
 Cerealization is a flexible serialization and configuration library for the Flow collection.
 
+## Getting Started
+* [Examples and code snippets](https://github.com/flow/examples/cerealization)
+* [Official documentation](#documentation)
+* [IRC support chat][IRC]
+* [Issues tracker][Issues]
+
 ## Source Code
 The latest and greatest source can be found here on [GitHub][Source]. If you are using Git, use this command to clone the project:
 
@@ -61,13 +67,7 @@ The `master` branch is production-ready, but is not yet vetted for release. Only
 
 Our release branches are named by version number, e.g. `1.0` and `1.1`. We begin release branches with a beta (b1) designation and progress them through release candidate to stable. All open source releases (included pre-releases) are tagged.
 
-## Getting Help
-* [Examples and code snippets](https://github.com/flow/examples/cerealization)
-* [Project documentation][Docs]
-* [IRC support chat][IRC]
-* [Issues tracker][Issues]
-
-## License
+## Legal Stuff
 Flow Cerealization is licensed under the [MIT License][License]. Basically, you can do whatever you want as long as you include the original copyright. Please see the `LICENSE.txt` file for details.
 
 ## Credits
