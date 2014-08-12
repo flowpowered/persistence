@@ -52,7 +52,7 @@ If you do not already have the required repo in your repository list, you will n
 
     <repository>
         <id>sonatype-nexus</id>
-        <url>https://oss.sonatype.org/content/groups/public/</url>
+        <url>https://oss.sonatype.org/content/groups/public</url>
     </repository>
 
 If you're using [Gradle](http://www.gradle.org/) to manage project dependencies, simply include the following in your `build.gradle` file:
