@@ -21,6 +21,13 @@ We love open-source libraries! This project uses are few of them to make things 
 * [org.apache.commons:commons-lang3](https://oss.sonatype.org/#nexus-search;gav~org.apache~commons-lang3~~~)
 * [org.yaml:snakeyaml](https://oss.sonatype.org/#nexus-search;gav~org.yaml~snakeyaml~~~)
 
+## Test Dependencies
+The following dependencies are only needed if you compiling the tests included with this project. Gotta test 'em all!
+* [junit:junit](https://oss.sonatype.org/#nexus-search;gav~junit~junit~~~)
+* [org.hamcrest:hamcrest-library](https://oss.sonatype.org/#nexus-search;gav~org.hamcrest~hamcrest-library~~~)
+* [org.powermock:powermock-api-mockito](https://oss.sonatype.org/#nexus-search;gav~org.powermock~powermock-api-mockito~~~)
+* [org.powermock:powermock-module-junit4](https://oss.sonatype.org/#nexus-search;gav~org.powermock~powermock-module-junit4~~~)
+
 ## Building from Source
 This project can be built with the _latest_ [Java Development Kit](http://oracle.com/technetwork/java/javase/downloads) and [Maven](http://maven.apache.org/) or [Gradle](http://www.gradle.org/). Maven and Gradle are used to simplify dependency management, but using either of them is optional.
 
