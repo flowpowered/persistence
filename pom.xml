@@ -83,11 +83,11 @@
     <repositories>
         <repository>
             <id>sonatype-nexus-releases</id>
-            <url>https://oss.sonatype.org/content/repositories/releases/</url>
+            <url>https://oss.sonatype.org/content/repositories/releases</url>
         </repository>
         <repository>
             <id>sonatype-nexus-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
             <snapshots>
                 <enabled>true</enabled>
                 <updatePolicy>always</updatePolicy>
@@ -99,11 +99,11 @@
     <pluginRepositories>
         <pluginRepository>
             <id>sonatype-nexus-releases</id>
-            <url>https://oss.sonatype.org/content/repositories/releases/</url>
+            <url>https://oss.sonatype.org/content/repositories/releases</url>
         </pluginRepository>
         <pluginRepository>
             <id>sonatype-nexus-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
             <snapshots>
                 <enabled>true</enabled>
                 <updatePolicy>always</updatePolicy>
