@@ -1,6 +1,6 @@
 # Flow Persistence [![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)][License] [![Flattr this](http://img.shields.io/badge/flattr-donate-lightgrey.svg?style=flat)][Donate] [![Build Status](http://img.shields.io/travis/flow/persistence/develop.svg?style=flat)](https://travis-ci.org/flow/persistence) [![Coverage Status](http://img.shields.io/coveralls/flow/persistence/develop.svg?style=flat)](https://coveralls.io/r/flow/persistence)
 
-Flexible serialization and configuration library.
+Flexible serialization and configuration library supporting multiple file formats, default values for unspecified fields, and injection of values into annotated Java fields.
 
 ## Getting Started
 * [Examples and code snippets](https://github.com/flow/examples/tree/master/persistence)
@@ -52,7 +52,7 @@ If you're using [Maven](https://maven.apache.org/download.html) to manage projec
     <dependency>
         <groupId>com.flowpowered</groupId>
         <artifactId>flow-persistence</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0</version>
     </dependency>
 
 If you're using [Gradle](https://www.gradle.org/) to manage project dependencies, simply include the following in your `build.gradle` file:
@@ -61,7 +61,7 @@ If you're using [Gradle](https://www.gradle.org/) to manage project dependencies
         mavenCentral()
     }
     dependencies {
-        compile 'com.flowpowered:flow-persistence:1.0.0-SNAPSHOT'
+        compile 'com.flowpowered:flow-persistence:1.0.0'
     }
 
 If you'd prefer to manually import the latest .jar file, you can get it [here](https://github.com/flow/persistence/releases).

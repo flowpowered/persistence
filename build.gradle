@@ -13,11 +13,11 @@ apply plugin: 'signing'
 ext.projectName = 'Flow Persistence'
 group = 'com.flowpowered'
 archivesBaseName = 'flow-persistence'
-version = '1.0.0-SNAPSHOT'
+version = '1.0.0'
 ext.packaging = 'jar'
 ext.inceptionYear = '2013'
 ext.url = 'https://flowpowered.com/persistence'
-ext.description = 'Flexible serialization and configuration library for the Flow collection.'
+ext.description = 'Flexible serialization and configuration library supporting multiple file formats, default values for unspecified fields, and injection of values into annotated Java fields.'
 
 // Organization information
 ext.organization = 'Flow Powered'
